@@ -1,0 +1,2 @@
+# AuroraCast
+Weather project
