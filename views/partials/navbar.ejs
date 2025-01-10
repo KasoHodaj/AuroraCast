@@ -1,0 +1,479 @@
+<nav>
+  <div class="icon"><b>AuroraCast.</b></div>
+
+  <form class="search-box" action="/" method="GET">
+    <!--TODO-->
+    <input
+      name="city"
+      type="text"
+      placeholder="Enter city"
+      autocomplete="off"
+      required
+    />
+    <button type="submit"><span class="fa fa-search"></span></button>
+  </form>
+
+  <ol>
+    <li>
+      <button data-dropdown="language">
+        <i class="fa-solid fa-language"></i>Language
+      </button>
+      <ul class="dropdown language">
+        <li><button>Albanian</button></li>
+        <li><button>English</button></li>
+        <li><button>Greek</button></li>
+        <li><button>Italian</button></li>
+      </ul>
+    </li>
+    <li>
+      <button data-dropdown="theme">
+        <i class="fa-solid fa-circle-half-stroke"></i>Theme
+      </button>
+      <ul class="dropdown theme">
+        <li><button>Light Mode</button></li>
+        <li><button>Dark Mode</button></li>
+      </ul>
+    </li>
+    <li>
+      <button>
+        <i class="fa-solid fa-location-crosshairs"></i>Currect Location
+      </button>
+    </li>
+  </ol>
+
+  <div class="bar">
+    <span class="fa fa-bars" id="bars"></span>
+    <span class="fa fa-times hidden" id="times"></span>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const bar = document.querySelector(".bar");
+    const barsIcon = document.getElementById("bars");
+    const timesIcon = document.getElementById("times");
+    const menu = document.querySelector("nav > ol");
+
+    bar.addEventListener("click", function () {
+      // Toggle the .open class on the <ol>
+      menu.classList.toggle("open");
+
+      // Toggle which icon (bars or times) is hidden
+      barsIcon.classList.toggle("hidden");
+      timesIcon.classList.toggle("hidden");
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Select all dropdown toggle buttons
+    const dropdownButtons = document.querySelectorAll("[data-dropdown]");
+
+    dropdownButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const dropdownType = button.getAttribute("data-dropdown");
+        const dropdownMenu = document.querySelector(
+          `.dropdown.${dropdownType}`
+        );
+
+        // Close other open dropdowns
+        document.querySelectorAll(".dropdown.active").forEach((menu) => {
+          if (menu !== dropdownMenu) {
+            menu.classList.remove("active");
+          }
+        });
+
+        // Toggle the current dropdown
+        dropdownMenu.classList.toggle("active");
+
+        // Prevent propagation to avoid unwanted closures
+        event.stopPropagation();
+      });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".dropdown.active").forEach((menu) => {
+        menu.classList.remove("active");
+      });
+    });
+  });
+</script>
+
+<style>
+
+
+  nav {
+    display: flex;
+    width: 100%; 
+    box-sizing: border-box;
+    background: #003366;
+    position: relative;
+    justify-content: space-between;
+    text-align: center;
+    padding: 15px;
+    margin: 0;
+  }
+
+  
+
+  /* AuroraCast Icon */
+  nav > .icon {
+    font-size: 35px;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+  }
+
+  nav > .icon > b:hover {
+    text-shadow: 0 0 3px #ffffff, 0 0 10px #ff00ff, 0 0 20px #00ffff, 0 0 20px black;
+    transition: text-shadow 0.1s ease-in-out;
+  }
+
+  /* Buttons List (Desktop view) */
+  nav > ol {
+    display: flex;
+    list-style: none;
+    margin: auto 0;
+    transition: 0.3s;
+  }
+
+  nav > ol > li {
+    margin: 0 4px;
+  }
+
+  nav > ol > li > button,
+  nav ol li ul li button {
+    color: white;
+    border: 0.5px solid white;
+    border-radius: 5px;
+    background: #007b9e;
+    font-size: 16px;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  nav > ol > li:hover > button,
+  nav ol li ul li button:hover {
+    background: white;
+    color: #007b9e;
+  }
+
+  /* body > nav > ol > li:nth-child(1) > ol,
+  body > nav > ol > li:nth-child(2) > ol{
+    visibility: hidden;
+    height: 0;
+  } */
+
+  /* General Dropdown Menu Styles */
+  nav ol li ul {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #444;
+    color: white;
+    display: none;
+    /* Hidden by default */
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 100;
+  }
+
+  nav ol li ul li button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  nav ol li ul li button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  /* Show Dropdown on Active */
+  nav ol li ul.active {
+    display: flex;
+  }
+
+  /* Search box (Desktop view) */
+  nav > .search-box {
+    display: flex;
+    margin: auto 0;
+    height: 35px;
+    line-height: 35px;
+    position: relative;
+  }
+
+  nav > .search-box > input {
+    border: none;
+    outline: none;
+    background: white;
+    height: 100%;
+    padding: 0 10px;
+    font-size: 16px;
+    width: 400px;
+    border-radius: 3px;
+  }
+
+  nav > .search-box > button > span {
+    color: #003366;
+    font-size: 20px;
+    background: white;
+    height: 100%;
+    padding: 8px;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 3px;
+  }
+
+  nav > .search-box > button > span::after {
+    height: 100%;
+    width: 0%;
+    content: "";
+    background: #007b9e;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    transition: 0.3s;
+  }
+
+  nav > .search-box > button > span:hover::after {
+    width: 100%;
+  }
+
+  /* Bar icons (mobile menu) */
+  nav > .bar {
+    position: relative;
+    margin: auto;
+    display: none;
+    /* hidden by default on larger screens */
+    cursor: pointer;
+  }
+
+  nav > .bar > span {
+    position: absolute;
+    right: 0;
+    color: white;
+    font-size: 35px;
+  }
+
+  /* Utility class to hide an element */
+  .hidden {
+    display: none !important;
+  }
+
+  /* Dropdown */
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #003366;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0;
+    z-index: 10;
+  }
+
+  /* Media Query for smaller screens */
+  @media screen and (max-width: 1000px) {
+    /* Basic nav container styles */
+    nav {
+      display: block;
+      padding: 0;
+      width: 100%;
+    }
+
+    nav > .icon {
+      display: inline-block;
+      padding: 15px 30px;
+    }
+
+    /* Search box styles */
+    nav > .search-box {
+      width: 100%;
+      display: inline-flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    nav > .search-box > input {
+      width: 90%;
+      position: relative;
+    }
+
+    nav > .search-box > button {
+      position: absolute;
+      right: 5%;
+      top: 0;
+      height: 100%;
+    }
+
+    /* Navigation menu styles */
+    nav > ol {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #003366;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+      max-height: 0;
+      width: 100%;
+    }
+
+    nav > ol.open {
+      opacity: 1;
+      height: auto;
+      max-height: 500px;
+      transform: translateY(0);
+    }
+
+    /* List item styles */
+    nav > ol > li {
+      text-align: center;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    nav > ol.open > li {
+      opacity: 1;
+      transform: translateY(0);
+      z-index: 10;
+    }
+
+    /* Button styles */
+    nav > ol > li > button {
+      color: white;
+      font-size: 16px;
+      padding: 15px;
+      display: block;
+      background: #007b9e;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      width: 80%;
+      max-width: 300px;
+      margin: 10px 0;
+      text-align: center;
+      transition: background-color 0.3s;
+    }
+
+    nav > ol > li > button:hover {
+      background: #005f7f;
+      color: white;
+    }
+
+    /* Dropdown menu styles */
+    nav ol li ul {
+      position: static;
+      width: 80%;
+      max-width: 300px;
+      margin: 0 auto;
+      background: #444;
+      box-shadow: none;
+    }
+
+    nav ol li ul li button {
+      width: 100%;
+      padding: 10px;
+      text-align: center;
+      color: white;
+    }
+
+    /* Hamburger menu icon */
+    nav > .bar {
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    nav > .bar > span {
+      font-size: 35px;
+      color: white;
+      transition: color 0.3s ease;
+    }
+
+    nav > .bar > span:hover {
+      color: #007b9e;
+    }
+
+    nav ol li {
+      position: relative; /* Enable absolute positioning of dropdown */
+    }
+
+    nav ol li ul.dropdown {
+      position: absolute;
+      top: 5%; /* Position above the button */
+      left: 100%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 300px;
+      height: 100%;
+      opacity: 0;
+      background: #005f7f;
+      border-radius: 5px;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      z-index: 100; /* Ensure dropdown appears above other elements */
+    }
+
+    nav ol li ul.dropdown.active {
+      height: auto;
+      opacity: 1;
+      pointer-events: all;
+      padding: 5px 0;
+      position: sticky;
+    }
+
+    nav ol li ul.dropdown li {
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    nav ol li ul.dropdown.active li {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    nav ol li ul.dropdown li button {
+      width: 100%;
+      padding: 10px 20px;
+      background: transparent;
+      color: white;
+      text-align: center;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ol li ul.dropdown li button:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+</style>
