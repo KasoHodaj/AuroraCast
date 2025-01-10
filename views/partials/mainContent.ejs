@@ -2,18 +2,19 @@
   <p>“Under the Aurora’s Dance, We Begin Our Journey”</p>
 </header>
 
-<main>
+<main class="vh-100">
   <!-- Current Weather Section -->
   <section id="current-weather">
     <div class="weather-now">
       <h2>Now</h2>
       <div class="temperature">
-        <span id="current-temp" class="temp-value">--°C</span>
+        <span id="current-temp" class="temp-value">29°C</span>
         <span id="current-icon" class="icon">☀️</span>
       </div>
-      <p id="current-condition">--</p>
-      <p id="current-date">--</p>
-      <p id="current-location">--</p>
+      <p id="current-condition">Sunny</p>
+      <span id="horizontal-line"></span>
+      <p id="current-date">Sunday 22 Dec</p>
+      <p id="current-location">Thessaloniki, Central Macedonia, GR</p>
     </div>
   </section>
 
@@ -23,30 +24,66 @@
     <div class="air-quality">
       <h3>Air Quality Index</h3>
       <div id="aqi-details" class="aqi-details">
-        <!-- Populated dynamically -->
+        <div>
+          <div id="aqi-details">
+            <div id="weather-icon">
+              <img
+                style="width: 40px"
+                src="/assets/wind.png"
+                alt="windy wind image"
+              />
+            </div>
+            <div id="particulate-matter">
+              <p>PM<sub>2.5</sub></p>
+              <span>4.01</span>
+            </div>
+            <div id="sulfur-dioxide">
+              <p>SO<sub>2</sub></p>
+              <span>1.53</span>
+            </div>
+            <div id="nitrogen-dioxide">
+              <p>NO<sub>2</sub></p>
+              <span>3.89</span>
+            </div>
+            <div id="ozone">
+              <p>O<sub>3</sub></p>
+              <span>67.22</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div id="aqi-status" class="aqi-status">--</div>
+      <div id="aqi-status" class="aqi-status">Good</div>
     </div>
+
     <div class="highlights">
       <h3>Highlights</h3>
-      <p id="highlights-text">--</p>
+      <p id="highlights-text">
+        Currently, conditions are mild, with moderate humidity, stable
+        atmospheric pressure, and clear visibility. Air quality is classified as
+        Good, indicating minimal pollutant levels.
+      </p>
     </div>
+
     <div class="forecast-details">
       <div>
         <p>Humidity</p>
-        <span id="humidity">--%</span>
+        <img src="/assets/humidity.png" alt="humidity icon" />
+        <span id="humidity">70%</span>
       </div>
       <div>
         <p>Pressure</p>
-        <span id="pressure">-- hPa</span>
+        <img src="/assets/barometer.png" alt="pressure icon" />
+        <span id="pressure">1010 hPa</span>
       </div>
       <div>
         <p>Visibility</p>
-        <span id="visibility">-- KM</span>
+        <img src="/assets/visibility.png" alt="visibility icon" />
+        <span id="visibility">11 KM</span>
       </div>
       <div>
         <p>Feels Like</p>
-        <span id="feels-like">--°C</span>
+        <img src="/assets/thermometer.png" alt="thermometer icon" />
+        <span id="feels-like">11°C</span>
       </div>
     </div>
   </section>
@@ -55,7 +92,48 @@
   <section id="weekly-forecast">
     <h2>7 Days Forecast</h2>
     <div id="weekly-forecast-grid" class="forecast-grid">
-      <!-- Populated dynamically -->
+      <div class="forecast-row">
+        <div class="day-name">Monday</div>
+        <div class="date">23 Dec</div>
+        <div class="weather-icon">
+          <img src="/assets/snowflake.png" alt="Snow" />
+        </div>
+      </div>
+      <div class="forecast-row">
+        <div class="day-name">Tuesday</div>
+        <div class="date">24 Dec</div>
+        <div class="weather-icon">
+          <img src="/assets/partly-cloudy.png" alt="Partly Cloudy" />
+        </div>
+      </div>
+      <div class="forecast-row">
+        <div class="day-name">Wednesday</div>
+        <div class="date">25 Dec</div>
+        <div class="weather-icon">
+          <img src="/assets/day-mode.png" alt="Sunny" />
+        </div>
+      </div>
+      <div class="forecast-row">
+        <div class="day-name">Thursday</div>
+        <div class="date">26 Dec</div>
+        <div class="weather-icon">
+          <img src="/assets/rainy-day.png" alt="Rainy" />
+        </div>
+      </div>
+      <div class="forecast-row">
+        <div class="day-name">Friday</div>
+        <div class="date">27 Dec</div>
+        <div class="weather-icon">
+          <img src="/assets/rainy-day.png" alt="Rainy" />
+        </div>
+      </div>
+      <div class="forecast-row">
+        <div class="day-name">Saturday</div>
+        <div class="date">28 Dec</div>
+        <div class="weather-icon">
+          <img src="/assets/day-mode.png" alt="Sunny" />
+        </div>
+      </div>
     </div>
   </section>
 
@@ -63,14 +141,33 @@
   <section id="hourly-weather">
     <h3>Hourly Forecast</h3>
     <div id="hourly-grid" class="hourly-grid">
-      <!-- Populated dynamically -->
+      <div class="hourly-time">
+        <p>12:00 PM</p>
+        <img src="/assets/sun.png" alt="Sunny" style="width: 30px" />
+        <span>29°C</span>
+      </div>
+      <div class="hourly-time">
+        <p>1:00 PM</p>
+        <img src="/assets/sun.png" alt="Sunny" style="width: 30px" />
+        <span>30°C</span>
+      </div>
+      <div class="hourly-time">
+        <p>2:00 PM</p>
+        <img src="/assets/cloud.png" alt="Partly Cloudy" style="width: 30px" />
+        <span>28°C</span>
+      </div>
+      <div class="hourly-time">
+        <p>3:00 PM</p>
+        <img src="/assets/rain-cloud.png" alt="Rain" style="width: 30px" />
+        <span>26°C</span>
+      </div>
     </div>
   </section>
 
   <!-- Did You Know Section -->
   <section id="did-you-know">
     <h2>Did you know?</h2>
-    <p id="fun-fact">--</p>
+    <p id="fun-fact">Lightning strikes Earth about 8 million times per day.</p>
   </section>
 </main>
 
@@ -79,10 +176,12 @@
 
   main {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr; /* Left, Center, Right columns */
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    /* Left, Center, Right columns */
     gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
+    padding: 15px;
+    max-width: 1300px;
     margin: 0 auto;
   }
 
@@ -99,20 +198,23 @@
 
   /* Current Weather Section */
   #current-weather {
-    grid-column: 1 / 2; /* Left column */
+    grid-column: 1 / 2;
+    /* Left column */
     grid-row: 1 / 2;
     text-align: center;
     background-color: #fff;
     border-radius: 10px;
-    padding: 20px;
-    width: 20%;
-    min-width: 300px;
-    text-align: center;
+    padding: 30px;
+    width: 40%;
+    height: 100%;
+    min-width: 350px;
+    text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   #current-weather h2 {
     font-size: 1.5rem;
+    text-align: left;
     margin-bottom: 10px;
     color: #002b5c;
   }
@@ -123,28 +225,59 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 80px;
   }
 
   .temperature .icon {
-    font-size: 2rem;
+    font-size: 2.5rem;
+  }
+
+  #current-condition {
+    margin-top: 2rem;
+    margin-bottom: 0.7rem;
+    font-size: 1.1rem;
+  }
+
+  #horizontal-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #ddd;
+    margin: 10px 0;
+  }
+
+  #current-date {
+    margin-top: 0rem;
+    margin-bottom: 0.2rem;
+    font-size: 0.9rem;
+  }
+
+  #current-location {
+    margin-bottom: -1rem;
+    font-size: 0.9rem;
   }
 
   #current-condition,
   #current-date,
   #current-location {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #555;
   }
 
   /* Today's Forecast */
   #todays-forecast {
-    grid-column: 2 / 4; /* Center column */
-    grid-row: 1 / 2;
+    grid-column: 2 / 4;
+    /* Center column */
+    grid-row: 1 / 3;
+    gap: 30px;
+    display: grid;
+    grid-template-columns: 2fr 2fr; /* Left column for Air Quality, Right column for Highlights */
+    grid-template-rows: auto 1fr 1fr; /* Rows for top (AQI and Highlights) and bottom (Forecast Details) */
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
     width: 100%;
+    height: 100%;
     min-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -157,58 +290,187 @@
 
   /* Air Quality */
   .air-quality {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    grid-column: 1/2;
+    grid-row: 2/3;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    /* Title and status in two columns */
+    grid-template-rows: auto auto;
+    /* Title row and details row */
+    gap: 15px;
+    /* Add spacing between rows and columns */
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    /* Control card width */
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    /* Rounded corners */
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    font-family: Arial, sans-serif;
   }
 
-  .aqi-details div {
-    text-align: center;
-    font-size: 0.9rem;
+  .air-quality h3 {
+    grid-column: 1 / 2;
+    /* Title spans the first column */
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+    align-self: center;
   }
 
-  .aqi-status {
-    font-weight: bold;
+  #aqi-status {
+    grid-column: 2 / 3;
+    /* Status badge in the second column */
+    grid-row: 1 / 2;
+    /* Align with the title */
     background-color: #28a745;
+    /* Green for "Good" */
     color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 5px 15px;
+    border-radius: 15px;
     font-size: 0.9rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  #aqi-details {
+    grid-column: 1 / 3;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    padding-top: 5px;
+  }
+
+  #weather-icon {
+    grid-column: 1/2;
+    margin-right: 30px;
+  }
+
+  #particulate-matter {
+    grid-column: 2 / 3;
+    /* First column */
+  }
+
+  #sulfur-dioxide {
+    grid-column: 3 / 4;
+    /* Second column */
+  }
+
+  #nitrogen-dioxide {
+    grid-column: 4 / 5;
+    /* Third column */
+  }
+
+  #ozone {
+    grid-column: 5 / 6;
+    /* Fourth column */
+  }
+
+  #aqi-details div {
+    text-align: center;
+  }
+
+  #aqi-details div p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+  }
+
+  #aqi-details div span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+    margin-top: 5px;
   }
 
   /* Highlights */
   .highlights {
-    margin-bottom: 20px;
+    margin: 0;
+    grid-row: 2 / 3;
+    grid-column: 2/3;
+    border: 1px solid #ddd; /* Add a subtle border */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    padding: 15px; /* Internal spacing */
+    font-size: 0.9rem; /* Slightly smaller font size */
+    color: #333; /* Dark text color */
+    background-color: #fff; /* Light background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    display: flex; /* Align content neatly */
+    flex-direction: column; /* Stack heading and paragraph vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: flex-start; /* Left-align text */
   }
 
   .highlights h3 {
     font-size: 1.2rem;
     margin-bottom: 10px;
     color: #002b5c;
+    width: 50%;
   }
 
   .forecast-details {
-    grid-template-columns: repeat(4, 1fr);
-    display: flex;
-    justify-content: space-around;
-    margin-top: 15px;
+    grid-column: 1 / 3; /* Span both columns */
+    grid-row: 3 / 4; /* Third row of the layout */
+    display: grid; /* Make this a grid container */
+    grid-template-columns: repeat(4, 1fr); /* Four equal-width columns */
+    gap: 20px; /* Space between grid items */
   }
 
   .forecast-details div {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #555;
+    text-align: center; /* Center-align content inside the card */
+    font-size: 0.9rem; /* Standard font size */
+    color: #555; /* Subtle text color */
+    border: 1px solid #ddd; /* Light border for the card */
+    border-radius: 10px; /* Rounded corners for modern look */
+    padding: 15px; /* Padding inside each card */
+    background-color: #fff; /* White background for the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex; /* Flexbox for aligning content */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    min-height: 150px; /* Ensure consistent height */
+    max-width: 200px; /* Ensure consistent width */
+  }
+
+  .forecast-details div img {
+    margin: 10px 0; /* Add spacing around the icon */
+    width: 25px; /* Icon size */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .forecast-details div p {
+    margin: 0;
+    font-size: 1rem; /* Slightly larger font for labels */
+    font-weight: bold;
+    color: #333; /* Darker color for better contrast */
+  }
+
+  .forecast-details div span {
+    margin-top: 5px; /* Add spacing above the value */
+    font-size: 1.2rem; /* Larger font for values */
+    font-weight: bold;
+    color: #000; /* Strong black color for values */
   }
 
   /* 7 Days Forecast */
   #weekly-forecast {
-    grid-column: 1 / 2; /* Left column */
-    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    /* Left column */
+    grid-row: 2 / 5;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
-    width: 40%;
+    width: 100%;
+    height: 75%;
     min-width: 300px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -218,12 +480,53 @@
     font-size: 1.5rem;
     margin-bottom: 15px;
     color: #002b5c;
+    text-align: left;
   }
 
   .forecast-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
+    display: flex;
+    flex-direction: column; /* Stack rows vertically */
+    gap: 15px; /* Space between rows */
+    margin-top: 20px;
+  }
+
+  /* Individual Day Row */
+  .forecast-row {
+    display: flex;
+    justify-content: space-between; /* Space out day, date, and icon */
+    align-items: center; /* Center items vertically */
+    padding: 10px;
+    border: 1px solid #ddd; /* Light border for separation */
+    border-radius: 5px; /* Rounded edges for rows */
+    background-color: #fff; /* Light background for rows */
+  }
+
+  /* Day Name */
+  .forecast-row .day-name {
+    text-align: left;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    flex: 1; /* Allow equal space */
+  }
+
+  /* Date */
+  .forecast-row .date {
+    font-size: 0.9rem;
+    color: #555;
+    flex: 1; /* Allow equal space */
+    text-align: center;
+  }
+
+  /* Weather Icon */
+  .forecast-row .weather-icon {
+    flex: 1; /* Allow equal space */
+    text-align: right;
+  }
+
+  .forecast-row .weather-icon img {
+    width: 25px;
+    height: auto;
   }
 
   .forecast-day {
@@ -240,13 +543,15 @@
 
   /* Hourly Weather */
   #hourly-weather {
-    grid-column: 2 / 3; /* Right column */
-    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    /* Right column */
+    grid-row: 3 / 5;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
     width: 100%;
     min-width: 400px;
+    height: 62%;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -282,12 +587,14 @@
 
   /* Did You Know Section */
   #did-you-know {
-    grid-column: 3 / 4; /* Right column */
-      grid-row: 2 / 3;
+    grid-column: 3 / 4;
+    /* Right column */
+    grid-row: 3 / 5;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
-    width: 50%;
+    width: 100%;
+    height: 62%;
     min-width: 350px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
