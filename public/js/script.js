@@ -7,3 +7,12 @@ form.addEventListener('submit', (e) => {
         alert('Please enter a city name.');
     }
 });
+
+function toggleTheme() {
+  // Your theme toggling logic here
+}
+
+function handleLanguageSwitch(e, lang) {
+  e.preventDefault();
+  // Switch to `lang` logic here
+}
