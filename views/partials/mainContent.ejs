@@ -1,0 +1,306 @@
+<header>
+  <p>“Under the Aurora’s Dance, We Begin Our Journey”</p>
+</header>
+
+<main>
+  <!-- Current Weather Section -->
+  <section id="current-weather">
+    <div class="weather-now">
+      <h2>Now</h2>
+      <div class="temperature">
+        <span id="current-temp" class="temp-value">--°C</span>
+        <span id="current-icon" class="icon">☀️</span>
+      </div>
+      <p id="current-condition">--</p>
+      <p id="current-date">--</p>
+      <p id="current-location">--</p>
+    </div>
+  </section>
+
+  <!-- Today's Forecast Section -->
+  <section id="todays-forecast">
+    <h2>Today's Forecast</h2>
+    <div class="air-quality">
+      <h3>Air Quality Index</h3>
+      <div id="aqi-details" class="aqi-details">
+        <!-- Populated dynamically -->
+      </div>
+      <div id="aqi-status" class="aqi-status">--</div>
+    </div>
+    <div class="highlights">
+      <h3>Highlights</h3>
+      <p id="highlights-text">--</p>
+    </div>
+    <div class="forecast-details">
+      <div>
+        <p>Humidity</p>
+        <span id="humidity">--%</span>
+      </div>
+      <div>
+        <p>Pressure</p>
+        <span id="pressure">-- hPa</span>
+      </div>
+      <div>
+        <p>Visibility</p>
+        <span id="visibility">-- KM</span>
+      </div>
+      <div>
+        <p>Feels Like</p>
+        <span id="feels-like">--°C</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 Days Forecast Section -->
+  <section id="weekly-forecast">
+    <h2>7 Days Forecast</h2>
+    <div id="weekly-forecast-grid" class="forecast-grid">
+      <!-- Populated dynamically -->
+    </div>
+  </section>
+
+  <!-- Hourly Weather Section -->
+  <section id="hourly-weather">
+    <h3>Hourly Forecast</h3>
+    <div id="hourly-grid" class="hourly-grid">
+      <!-- Populated dynamically -->
+    </div>
+  </section>
+
+  <!-- Did You Know Section -->
+  <section id="did-you-know">
+    <h2>Did you know?</h2>
+    <p id="fun-fact">--</p>
+  </section>
+</main>
+
+<style>
+  /* General Reset */
+
+  main {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Left, Center, Right columns */
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin: 10px;
+  }
+
+  header p {
+    font-style: italic;
+    color: rgb(17, 17, 17);
+  }
+
+  /* Current Weather Section */
+  #current-weather {
+    grid-column: 1 / 2; /* Left column */
+    grid-row: 1 / 2;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 20%;
+    min-width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #current-weather h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #002b5c;
+  }
+
+  .temperature {
+    font-size: 2.5rem;
+    color: #007b9e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .temperature .icon {
+    font-size: 2rem;
+  }
+
+  #current-condition,
+  #current-date,
+  #current-location {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  /* Today's Forecast */
+  #todays-forecast {
+    grid-column: 2 / 4; /* Center column */
+    grid-row: 1 / 2;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    min-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #todays-forecast h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #002b5c;
+  }
+
+  /* Air Quality */
+  .air-quality {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .aqi-details div {
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .aqi-status {
+    font-weight: bold;
+    background-color: #28a745;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+  }
+
+  /* Highlights */
+  .highlights {
+    margin-bottom: 20px;
+  }
+
+  .highlights h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #002b5c;
+  }
+
+  .forecast-details {
+    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+  }
+
+  .forecast-details div {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  /* 7 Days Forecast */
+  #weekly-forecast {
+    grid-column: 1 / 2; /* Left column */
+    grid-row: 2 / 3;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 40%;
+    min-width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #weekly-forecast h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #002b5c;
+  }
+
+  .forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+  }
+
+  .forecast-day {
+    background-color: #007b9e;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .forecast-day p {
+    font-size: 0.8rem;
+  }
+
+  /* Hourly Weather */
+  #hourly-weather {
+    grid-column: 2 / 3; /* Right column */
+    grid-row: 2 / 3;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    min-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #hourly-weather h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #002b5c;
+  }
+
+  .hourly-grid {
+    display: flex;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+
+  .hourly-time {
+    text-align: center;
+  }
+
+  .hourly-time p,
+  .hourly-time span {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .hourly-time span {
+    font-size: 1.2rem;
+    color: #007b9e;
+  }
+
+  /* Did You Know Section */
+  #did-you-know {
+    grid-column: 3 / 4; /* Right column */
+      grid-row: 2 / 3;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 50%;
+    min-width: 350px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #did-you-know h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #002b5c;
+  }
+
+  #did-you-know p {
+    font-size: 1rem;
+    color: #555;
+  }
+</style>
