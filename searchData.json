@@ -1,0 +1,50 @@
+[
+  {
+    "city": "Thessaloniki",
+    "lat": 40.6403167,
+    "lon": 22.9352716,
+    "timestamp": "2025-01-14T14:05:51.962Z"
+  },
+  {
+    "city": "paxos",
+    "lat": 39.2092883,
+    "lon": 20.16167755355726,
+    "timestamp": "2025-01-14T14:05:55.512Z"
+  },
+  {
+    "city": "thessaloniki",
+    "lat": 40.6403167,
+    "lon": 22.9352716,
+    "timestamp": "2025-01-14T14:06:33.547Z"
+  },
+  {
+    "city": "JEJU",
+    "lat": 33.4930566,
+    "lon": 126.5130589,
+    "timestamp": "2025-01-14T14:13:02.135Z"
+  },
+  {
+    "city": "JEJU",
+    "lat": 33.4930566,
+    "lon": 126.5130589,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "ip": "::1",
+    "timestamp": "2025-01-14T14:13:20.009Z"
+  },
+  {
+    "city": "thessaloniki",
+    "lat": 40.6403167,
+    "lon": 22.9352716,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "ip": "::1",
+    "timestamp": "2025-01-14T16:50:37.246Z"
+  },
+  {
+    "city": "Thessaloniki",
+    "lat": 40.6403167,
+    "lon": 22.9352716,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "ip": "::1",
+    "timestamp": "2025-01-14T18:07:47.471Z"
+  }
+]

@@ -1,5 +1,5 @@
 <header>
-  <p>“Under the Aurora’s Dance, We Begin Our Journey”</p>
+  <p>“Under the Aurora, We Begin Our Journey”</p>
 </header>
 
 <main class="vh-100">
@@ -8,161 +8,143 @@
     <div class="weather-now">
       <h2>Now</h2>
       <div class="temperature">
-        <span id="current-temp" class="temp-value">29°C</span>
-        <span id="current-icon" class="icon">☀️</span>
+        <span id="current-temp" class="temp-value"><%= current.temp %></span>
+        <img
+          id="current-icon"
+          src="<%= current.icon %>"
+          alt="<%= current.condition %> icon"
+        />
       </div>
-      <p id="current-condition">Sunny</p>
+      <p id="current-condition"><%= current.condition %></p>
       <span id="horizontal-line"></span>
-      <p id="current-date">Sunday 22 Dec</p>
-      <p id="current-location">Thessaloniki, Central Macedonia, GR</p>
+      <p id="current-date"><%= current.date %></p>
+      <p id="current-location"><%= current.location %></p>
     </div>
   </section>
 
   <!-- Today's Forecast Section -->
-  <section id="todays-forecast">
-    <h2>Today's Forecast</h2>
-    <div class="air-quality">
-      <h3>Air Quality Index</h3>
-      <div id="aqi-details" class="aqi-details">
-        <div>
-          <div id="aqi-details">
-            <div id="weather-icon">
-              <img
-                style="width: 40px"
-                src="/assets/wind.png"
-                alt="windy wind image"
-              />
-            </div>
-            <div id="particulate-matter">
-              <p>PM<sub>2.5</sub></p>
-              <span>4.01</span>
-            </div>
-            <div id="sulfur-dioxide">
-              <p>SO<sub>2</sub></p>
-              <span>1.53</span>
-            </div>
-            <div id="nitrogen-dioxide">
-              <p>NO<sub>2</sub></p>
-              <span>3.89</span>
-            </div>
-            <div id="ozone">
-              <p>O<sub>3</sub></p>
-              <span>67.22</span>
-            </div>
+<!-- Today's Forecast Section -->
+<section id="todays-forecast">
+  <h2>Today's Forecast</h2>
+  
+  <div class="air-quality">
+    <h3>Air Quality Index</h3>
+    
+    <div id="aqi-details" class="aqi-details">
+      <div>
+        <div id="aqi-details">
+          <div id="weather-icon">
+            <img
+              style="width: 40px"
+              src="/assets/wind.png"
+              alt="windy wind image"
+            />
+          </div>
+          <div id="particulate-matter">
+            <p>PM<sub>2.5</sub></p>
+            <span><%= pm25 || '--' %></span>
+          </div>
+          <div id="sulfur-dioxide">
+            <p>SO<sub>2</sub></p>
+            <span><%= so2 || '--' %></span>
+          </div>
+          <div id="nitrogen-dioxide">
+            <p>NO<sub>2</sub></p>
+            <span><%= no2 || '--' %></span>
+          </div>
+          <div id="ozone">
+            <p>O<sub>3</sub></p>
+            <span><%= o3 || '--' %></span>
           </div>
         </div>
       </div>
-      <div id="aqi-status" class="aqi-status">Good</div>
+    </div>
+    
+    <div id="aqi-status" class="aqi-status">
+      <%= aqiStatus || 'Good' %>
+    </div>
+  </div>
+
+  <div class="highlights">
+    <h3>Highlights</h3>
+    <p id="highlights-text">
+      <%= highlightsText || 'Currently, conditions are mild, with moderate humidity, stable atmospheric pressure, and clear visibility. Air quality is classified as Good, indicating minimal pollutant levels.' %>
+    </p>
+  </div>
+
+  <div class="forecast-details">
+    <div>
+      <p>Humidity</p>
+      <img src="/assets/humidity.png" alt="humidity icon" />
+      <span id="humidity"><%= humidity ? humidity + '%' : '--%' %></span>
     </div>
 
-    <div class="highlights">
-      <h3>Highlights</h3>
-      <p id="highlights-text">
-        Currently, conditions are mild, with moderate humidity, stable
-        atmospheric pressure, and clear visibility. Air quality is classified as
-        Good, indicating minimal pollutant levels.
-      </p>
+    <div>
+      <p>Pressure</p>
+      <img src="/assets/barometer.png" alt="pressure icon" />
+      <span id="pressure"><%= pressure ? pressure + ' hPa' : '---- hPa' %></span>
     </div>
 
-    <div class="forecast-details">
-      <div>
-        <p>Humidity</p>
-        <img src="/assets/humidity.png" alt="humidity icon" />
-        <span id="humidity">70%</span>
-      </div>
-      <div>
-        <p>Pressure</p>
-        <img src="/assets/barometer.png" alt="pressure icon" />
-        <span id="pressure">1010 hPa</span>
-      </div>
-      <div>
-        <p>Visibility</p>
-        <img src="/assets/visibility.png" alt="visibility icon" />
-        <span id="visibility">11 KM</span>
-      </div>
-      <div>
-        <p>Feels Like</p>
-        <img src="/assets/thermometer.png" alt="thermometer icon" />
-        <span id="feels-like">11°C</span>
-      </div>
+    <div>
+      <p>Visibility</p>
+      <img src="/assets/visibility.png" alt="visibility icon" />
+      <span id="visibility"><%= visibility ? visibility + ' KM' : '-- KM' %></span>
     </div>
-  </section>
 
-  <!-- 7 Days Forecast Section -->
+    <div>
+      <p>Feels Like</p>
+      <img src="/assets/thermometer.png" alt="thermometer icon" />
+      <span id="feels-like"><%= feelsLike ? feelsLike + '°C' : '--°C' %></span>
+    </div>
+  </div>
+</section>
+
+
   <section id="weekly-forecast">
     <h2>7 Days Forecast</h2>
     <div id="weekly-forecast-grid" class="forecast-grid">
-      <div class="forecast-row">
-        <div class="day-name">Monday</div>
-        <div class="date">23 Dec</div>
+      <% forecast.forEach(day => { %>
+      <div class="forecast-row <%= day.name === todayName ? 'today' : '' %>">
+        <div class="day-name"><%= day.name %></div>
+        <div class="date"><%= day.date %></div>
         <div class="weather-icon">
-          <img src="/assets/snowflake.png" alt="Snow" />
+          <img
+            src="<%= day.icon || '/assets/default-icon.png' %>"
+            alt="<%= day.description || 'Weather description not available' %>"
+          />
         </div>
+        <div class="temp"><%= day.temp %></div>
       </div>
-      <div class="forecast-row">
-        <div class="day-name">Tuesday</div>
-        <div class="date">24 Dec</div>
-        <div class="weather-icon">
-          <img src="/assets/partly-cloudy.png" alt="Partly Cloudy" />
-        </div>
-      </div>
-      <div class="forecast-row">
-        <div class="day-name">Wednesday</div>
-        <div class="date">25 Dec</div>
-        <div class="weather-icon">
-          <img src="/assets/day-mode.png" alt="Sunny" />
-        </div>
-      </div>
-      <div class="forecast-row">
-        <div class="day-name">Thursday</div>
-        <div class="date">26 Dec</div>
-        <div class="weather-icon">
-          <img src="/assets/rainy-day.png" alt="Rainy" />
-        </div>
-      </div>
-      <div class="forecast-row">
-        <div class="day-name">Friday</div>
-        <div class="date">27 Dec</div>
-        <div class="weather-icon">
-          <img src="/assets/rainy-day.png" alt="Rainy" />
-        </div>
-      </div>
-      <div class="forecast-row">
-        <div class="day-name">Saturday</div>
-        <div class="date">28 Dec</div>
-        <div class="weather-icon">
-          <img src="/assets/day-mode.png" alt="Sunny" />
-        </div>
-      </div>
+      <% }); %>
     </div>
   </section>
 
-  <!-- Hourly Weather Section -->
   <section id="hourly-weather">
     <h3>Hourly Forecast</h3>
+  
+    <!-- Temperature Forecast -->
     <div id="hourly-grid" class="hourly-grid">
-      <div class="hourly-time">
-        <p>12:00 PM</p>
-        <img src="/assets/sun.png" alt="Sunny" style="width: 30px" />
-        <span>29°C</span>
-      </div>
-      <div class="hourly-time">
-        <p>1:00 PM</p>
-        <img src="/assets/sun.png" alt="Sunny" style="width: 30px" />
-        <span>30°C</span>
-      </div>
-      <div class="hourly-time">
-        <p>2:00 PM</p>
-        <img src="/assets/cloud.png" alt="Partly Cloudy" style="width: 30px" />
-        <span>28°C</span>
-      </div>
-      <div class="hourly-time">
-        <p>3:00 PM</p>
-        <img src="/assets/rain-cloud.png" alt="Rain" style="width: 30px" />
-        <span>26°C</span>
-      </div>
+      <% ["Morning", "Afternoon", "Evening", "Overnight"].forEach((time, index) => { %>
+        <div class="hourly-time">
+          <p><%= time %></p>
+          <img src="<%= forecast[index]?.icon || '/assets/default-weather.png' %>" alt="<%= forecast[index]?.description || 'Weather' %>" />
+          <span><%= forecast[index]?.temp || 'N/A' %></span>
+        </div>
+      <% }); %>
+    </div>
+  
+    <!-- Wind Speed Forecast -->
+    <div id="hourly-wind-grid" class="hourly-grid">
+      <% ["Morning", "Afternoon", "Evening", "Overnight"].forEach((time, index) => { %>
+        <div class="hourly-time">
+          <p><%= time %></p>
+          <img src="/assets/send.png" alt="Windy" />
+          <span><%= forecast[index]?.wind_speed || 'N/A' %></span>
+        </div>
+      <% }); %>
     </div>
   </section>
+  
 
   <!-- Did You Know Section -->
   <section id="did-you-know">
@@ -188,12 +170,63 @@
   /* Header */
   header {
     text-align: center;
-    margin: 10px;
+    margin: 10px auto; /* Smaller vertical spacing */
+    padding: 8px 12px; /* Reduced padding for a compact look */
+    background: linear-gradient(
+      90deg,
+      #e1f5fe 0%,
+      #f0faff 100%
+    ); /* Subtle gradient */
+    border-radius: 5px; /* Slightly smaller rounding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle and compact shadow */
+    max-width: 500px; /* Reduced max width for compactness */
+    animation: fadeIn 1.1s ease-in-out; /* Smooth fade-in */
   }
 
   header p {
     font-style: italic;
-    color: rgb(17, 17, 17);
+    font-size: 1rem; /* Reduced font size */
+    font-weight: 500;
+    color: #007b9e; /* Blue color */
+    font-family: "Georgia", "Times New Roman", serif;
+    letter-spacing: 0.8px; /* Slightly tighter spacing */
+    line-height: 1.4; /* Reduced line height */
+    margin: 0; /* Remove extra margin */
+  }
+
+  header:before,
+  header:after {
+    content: "";
+    display: block;
+    width: 80px; /* Slightly larger decorative lines */
+    height: 1px; /* Thinner line */
+    background: #007b9e;
+    margin: 8px auto; /* Reduced spacing */
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    header {
+      max-width: 90%; /* Adapt width for smaller screens */
+      padding: 10px; /* Adjust padding for mobile */
+    }
+
+    header p {
+      font-size: 1rem; /* Smaller text for smaller screens */
+    }
+
+    header:before,
+    header:after {
+      width: 40px; /* Shorter lines on mobile */
+    }
   }
 
   /* Current Weather Section */
@@ -205,11 +238,16 @@
     background-color: #fff;
     border-radius: 10px;
     padding: 30px;
-    width: 40%;
+    width: 100%;
     height: 100%;
     min-width: 350px;
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #current-weather:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02); /* Slight zoom on hover */
   }
 
   #current-weather h2 {
@@ -225,23 +263,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 80px;
+    gap: 100px;
   }
 
-  .temperature .icon {
-    font-size: 2.5rem;
+  #current-icon {
+    width: 100px;
+    filter: brightness(0.9); /* Brightens */
   }
 
   #current-condition {
-    margin-top: 2rem;
+    margin-top: 1rem;
     margin-bottom: 0.7rem;
-    font-size: 1.1rem;
+    font-size: 1.2rem; /* Larger for emphasis */
+    font-weight: bold;
+    color: #555;
   }
 
   #horizontal-line {
     display: block;
     width: 100%;
-    height: 2px;
+    height: 1px;
     background-color: #ddd;
     margin: 10px 0;
   }
@@ -257,10 +298,9 @@
     font-size: 0.9rem;
   }
 
-  #current-condition,
   #current-date,
   #current-location {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #555;
   }
 
@@ -280,6 +320,11 @@
     height: 100%;
     min-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #todays-forecast:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02); /* Slight zoom on hover */
   }
 
   #todays-forecast h2 {
@@ -408,6 +453,7 @@
     justify-content: center; /* Center content vertically */
     align-items: flex-start; /* Left-align text */
   }
+  
 
   .highlights h3 {
     font-size: 1.2rem;
@@ -470,10 +516,15 @@
     border-radius: 10px;
     padding: 20px;
     width: 100%;
-    height: 75%;
+    height: 100%;
     min-width: 300px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #weekly-forecast:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02); /* Slight zoom on hover */
   }
 
   #weekly-forecast h2 {
@@ -525,8 +576,8 @@
   }
 
   .forecast-row .weather-icon img {
-    width: 25px;
-    height: auto;
+    width: 30px; /* Increase the width */
+    height: 30px; /* Ensure a consistent aspect ratio */
   }
 
   .forecast-day {
@@ -541,48 +592,86 @@
     font-size: 0.8rem;
   }
 
+  .forecast-row.today .day-name {
+    color: #007b9e;
+    font-weight: bold;
+  }
+
   /* Hourly Weather */
   #hourly-weather {
-    grid-column: 2 / 3;
-    /* Right column */
-    grid-row: 3 / 5;
+    grid-column: 2 / 3; /* Center column */
+    grid-row: 3 / 5; /* Spans across two rows */
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 10px; /* Rounded corners */
     padding: 20px;
-    width: 100%;
+    width: 100%; /* Full width in its column */
     min-width: 400px;
-    height: 62%;
+    height: auto; /* Adjust height based on content */
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+
+  #hourly-weather:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02); /* Slight zoom on hover */
+  }
+
+  .hourly-time img {
+    margin: 10px 0; /* Add spacing above and below icon */
+    width: 50px; /* Icon size */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  #hourly-wind-grid img{
+    width: 30px;
   }
 
   #hourly-weather h3 {
     font-size: 1.5rem;
     margin-bottom: 15px;
     color: #002b5c;
+    text-align: left;
   }
 
+  /* Grid for Hourly Data */
   .hourly-grid {
-    display: flex;
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four equally sized columns */
+    gap: 10px; /* Spacing between items */
+    justify-items: center; /* Center align items in grid */
     margin-top: 10px;
   }
 
   .hourly-time {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
     text-align: center;
+    border: 1px solid #ddd; /* Light border around each block */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px;
+    background-color: #fff; /* Light background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%; /* Responsive block width */
   }
 
-  .hourly-time p,
+  .hourly-time p {
+    margin: 0;
+    font-size: 1rem; /* Slightly larger font for labels */
+    font-weight: bold;
+    color: #333;
+  }
+
   .hourly-time span {
     font-size: 0.9rem;
     color: #555;
   }
 
   .hourly-time span {
-    font-size: 1.2rem;
-    color: #007b9e;
+    margin-top: 5px; /* Space above temperature/wind */
+    font-size: 1.2rem; /* Larger font for values */
+    font-weight: bold;
+    color: #007b9e; /* Highlight temperature/wind */
   }
 
   /* Did You Know Section */
@@ -594,11 +683,17 @@
     border-radius: 10px;
     padding: 20px;
     width: 100%;
-    height: 62%;
+    height: 100%;
     min-width: 350px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+
+  #did-you-know:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02); /* Slight zoom on hover */
+  }
+
 
   #did-you-know h2 {
     font-size: 1.5rem;
@@ -611,3 +706,37 @@
     color: #555;
   }
 </style>
+
+
+<script>
+  // Wait for DOM to load
+  document.addEventListener("DOMContentLoaded", () => {
+    const aqiStatusElement = document.getElementById("aqi-status");
+
+    if (aqiStatusElement) {
+      const status = aqiStatusElement.textContent.trim(); // e.g., "Good", "Fair", etc.
+
+      switch (status) {
+        case "Good":
+          aqiStatusElement.style.background = "green";
+          break;
+        case "Fair":
+          aqiStatusElement.style.background = "#4caf50"; // green-ish
+          break;
+        case "Moderate":
+          aqiStatusElement.style.background = "#ffc107"; // yellow
+          break;
+        case "Poor":
+          aqiStatusElement.style.background = "orange";
+          break;
+        case "Very Poor":
+          aqiStatusElement.style.background = "red";
+          break;
+        default:
+          aqiStatusElement.style.background = "black";
+      }
+    }
+  });
+
+
+</script>
