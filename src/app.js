@@ -13,6 +13,11 @@ app.set('view engine', 'ejs');
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Serve JSON files from the data folder
+app.use('/data', express.static(path.join(__dirname, '../data')));
+console.log("Serving languages from:", path.join(__dirname, '../data'));
+
+
 // Use the weather routes
 app.use('/', weatherRoutes);
 

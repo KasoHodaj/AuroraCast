@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Container */
+        .terms-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Heading */
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Paragraphs */
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* Back to Home Button */
+        .home-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        #footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 30px;
+        }
+
+        
+        #footer nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        #footer nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="terms-container">
+        <h1>Terms and Conditions</h1>
+        <p><strong>Last updated: 15/02/2025</strong></p>
+
+        <p>Welcome to AuroraCast. By using this project, you agree to the following terms.</p>
+
+        <p><strong>1. Open Source License</strong></p>
+        <p>This project is open-source and licensed under the <a href="https://opensource.org/licenses/MIT"
+                target="_blank">MIT License</a>.
+            You are free to use, modify, and distribute the code, provided you comply with the license terms.</p>
+
+        <p><strong>2. No Warranty</strong></p>
+        <p>This project is provided "as is," without any guarantees regarding availability, accuracy, or security.
+            The creator of AuroraCast is **not responsible for any issues** arising from its use.</p>
+
+        <p><strong>3. Self-Hosting Disclaimer</strong></p>
+        <p>If you self-host this project or modify its source code, you assume **full responsibility** for privacy,
+            security, and legal compliance.</p>
+
+        <p><strong>4. Contributions</strong></p>
+        <p>Contributions are welcome! By submitting code or issues to the <a
+                href="https://github.com/KasoHodaj/AuroraCast" target="_blank">GitHub repository</a>, you
+            agree that your contributions may be used under the same open-source license.</p>
+
+        <p>If you have any questions, please contact me at <a
+                href="mailto:kasohodaj@yahoo.gr.com">kasohodaj@yahoo.gr</a>.</p>
+
+        <p><em>Note: These terms apply to the official hosted version. Self-hosted implementations are your
+                responsibility.</em></p>
+
+
+        <!-- Back to Home Button -->
+        <button class="home-button" onclick="goHome()">Back to Home</button>
+    </div>
+
+    <section id="footer">
+        <footer>
+            <p>© 2025 AuroraCast. Created by Kaso Hodaj</p>
+            <nav>
+                <a href="/privacy-policy">Privacy Policy</a>
+                <a href="/terms-and-conditions">Terms and Conditions</a>
+                <a href="read-me">README</a>
+            </nav>
+        </footer>
+    </section>
+
+    <script>
+        function goHome() {
+            window.location.href = "http://localhost:3000"; 
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,28 +1,19 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
-const fs = require("fs");                // <-- 1) Import the fs module
-const path = require("path");            // <-- 2) Import path if needed
+const fs = require("fs");
+const path = require("path");
 
-
-// 1. Define the helper function AT THE TOP (outside the route)
+// Helper function to generate highlights text
 function generateHighlights(temp, humidity, pressure, visibility, aqiStatus) {
-  // build your dynamic summary here
   let statements = [];
 
-  if (temp >= 30) {
-    statements.push("it's quite hot");
-  } else if (temp <= 10) {
-    statements.push("it's fairly cold");
-  } else {
-    statements.push("conditions are mild");
-  }
+  if (temp >= 30) statements.push("it's quite hot");
+  else if (temp <= 10) statements.push("it's fairly cold");
+  else statements.push("conditions are mild");
 
-  if (humidity > 70) {
-    statements.push("with high humidity");
-  } else {
-    statements.push("with moderate humidity");
-  }
+  if (humidity > 70) statements.push("with high humidity");
+  else statements.push("with moderate humidity");
 
   if (pressure >= 1010 && pressure <= 1020) {
     statements.push("stable atmospheric pressure");
@@ -39,43 +30,136 @@ function generateHighlights(temp, humidity, pressure, visibility, aqiStatus) {
   }
 
   if (aqiStatus === "Good" || aqiStatus === "Fair") {
-    statements.push(`Air quality is classified as ${aqiStatus}, indicating minimal pollutant levels.`);
+    statements.push(
+      `Air quality is classified as ${aqiStatus}, indicating minimal pollutant levels.`
+    );
   } else {
-    statements.push(`Air quality is classified as ${aqiStatus}, indicating higher pollutant levels.`);
+    statements.push(
+      `Air quality is classified as ${aqiStatus}, indicating higher pollutant levels.`
+    );
   }
 
-  const summary = "Currently, " 
-    + statements.slice(0, -1).join(", ") 
-    + " and " 
-    + statements.slice(-1) 
-    + ".";
-
-  return summary;
+  return (
+    "Currently, " +
+    statements.slice(0, -1).join(", ") +
+    " and " +
+    statements.slice(-1) +
+    "."
+  );
 }
+router.get('/privacy-policy', (req, res) => {
+  res.render('partials/privacy-policy');
+});
 
+router.get('/terms-and-conditions', (req, res) => {
+  res.render('partials/terms-and-conditions');
+});
+
+router.get('/read-me', (req, res) => {
+  res.render('partials/read-me');
+});
+
+
+
+// Main route for fetching weather
 router.get("/", async (req, res) => {
-  const city = req.query.city || "Thessaloniki"; // Default city
+  // Grab query parameters from the URL
+  const cityQuery = req.query.city || null;
+  const latQuery = req.query.lat ? parseFloat(req.query.lat) : null;
+  const lonQuery = req.query.lon ? parseFloat(req.query.lon) : null;
   const apiKey = process.env.WEATHER_API_KEY;
 
   try {
-    // Fetch geolocation data
-    const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
-    const geoResponse = await axios.get(geoUrl);
-    if (!geoResponse.data[0]) throw new Error("City not found.");
+    let city = null;
+    let lat = null;
+    let lon = null;
+    let locationName = null;
 
-    const { lat, lon, name, state, country } = geoResponse.data[0];
+    /**
+     * 1) If lat/lon are present (clicked "Use My Location"),
+     *    do a reverse geocode to find the city name.
+     */
+    if (latQuery && lonQuery) {
+      // Reverse geocode: lat/lon -> city name
+      const revGeoUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latQuery}&lon=${lonQuery}&limit=1&appid=${apiKey}`;
+      const revGeoResponse = await axios.get(revGeoUrl);
 
-    // Fetch weather data
-    const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${apiKey}&units=metric`;
+      if (!revGeoResponse.data[0]) {
+        throw new Error("Unable to find city name from coordinates.");
+      }
+
+      const { name, state, country } = revGeoResponse.data[0];
+      lat = latQuery;
+      lon = lonQuery;
+      // Construct a friendly name like "Athens, Attica, GR"
+      locationName = `${name}, ${state || ""}, ${country}`
+        .replace(/,\s*,/g, ",")
+        .trim();
+
+      /**
+       * 2) Else if the user typed a city in the search box,
+       *    do a forward geocode to find lat/lon.
+       */
+    } else if (cityQuery) {
+      const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityQuery}&limit=1&appid=${apiKey}`;
+      const geoResponse = await axios.get(geoUrl);
+
+      if (!geoResponse.data[0]) {
+        throw new Error("City not found.");
+      }
+
+      const { lat: gLat, lon: gLon, name, state, country } = geoResponse.data[0];
+      lat = gLat;
+      lon = gLon;
+      locationName = `${name}, ${state || ""}, ${country}`
+        .replace(/,\s*,/g, ",")
+        .trim();
+
+      /**
+       * 3) Otherwise, no city and no lat/lon provided:
+       *    default to "London."
+       */
+    } else {
+      // Forward geocode "London"
+      const defaultCity = "Thessaloniki";
+      const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${defaultCity}&limit=1&appid=${apiKey}`;
+      const geoResponse = await axios.get(geoUrl);
+
+      if (!geoResponse.data[0]) {
+        throw new Error("City not found (default).");
+      }
+
+      const { lat: gLat, lon: gLon, name, state, country } = geoResponse.data[0];
+      lat = gLat;
+      lon = gLon;
+      locationName = `${name}, ${state || ""}, ${country}`
+        .replace(/,\s*,/g, ",")
+        .trim();
+    }
+
+    // ================================
+    //  Fetch weather & air quality
+    // ================================
+    const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric&appid=${apiKey}`;
     const weatherResponse = await axios.get(weatherUrl);
+    if (!weatherResponse.data || !weatherResponse.data.current) {
+      throw new Error("Invalid weather data received.");
+    }
     const weatherData = weatherResponse.data;
 
-    // ********** FETCH AIR QUALITY DATA **********
-    const aqiUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    // Air Quality
+    const aqiUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
     const aqiResponse = await axios.get(aqiUrl);
-    const aqiData = aqiResponse.data; // <--- define aqiData here
+    if (
+      !aqiResponse.data ||
+      !aqiResponse.data.list ||
+      aqiResponse.data.list.length === 0
+    ) {
+      throw new Error("Air quality data unavailable.");
+    }
+    const aqiData = aqiResponse.data;
 
-    // Extract current weather data
+    // Current weather data
     const currentDate = new Date();
     const current = {
       temp: `${Math.round(weatherData.current.temp)}°C`,
@@ -86,14 +170,12 @@ router.get("/", async (req, res) => {
         day: "numeric",
         month: "short",
       }),
-      location: `${name}, ${state || ""}, ${country}`
-        .replace(/, ,/g, ",")
-        .trim(),
+      location: locationName, // e.g. "Athens, Attica, GR"
     };
 
-    // Extract 7-day forecast data
+    // 7-day forecast
     const forecast = weatherData.daily.slice(0, 7).map((day) => {
-      const date = new Date(day.dt * 1000); // Convert Unix timestamp to JS Date
+      const date = new Date(day.dt * 1000);
       return {
         name: date.toLocaleDateString("en-US", { weekday: "long" }),
         date: date.toLocaleDateString("en-US", {
@@ -108,122 +190,78 @@ router.get("/", async (req, res) => {
 
     const todayName = currentDate.toLocaleDateString("en-US", {
       weekday: "long",
-    }); // Today's day name
+    });
 
-    // 6. Extract AQI data and pollutant components
-    // OpenWeather returns AQI as an integer 1–5, where:
-    //   1 = Good, 2 = Fair, 3 = Moderate, 4 = Poor, 5 = Very Poor
-    const aqiValue = aqiData.list?.[0]?.main?.aqi || 1; // Default to 1 if undefined
-    const aqiComponents = aqiData.list?.[0]?.components || {};
+    // AQI details
+    const aqiValue = aqiData.list?.[0]?.main?.aqi || 1;
+    const aqiStatus =
+      ["Good", "Fair", "Moderate", "Poor", "Very Poor"][aqiValue - 1] ||
+      "Unknown";
 
-    // Function to interpret AQI value
-    function getAqiStatus(aqi) {
-      switch (aqi) {
-        case 1:
-          return "Good";
-        case 2:
-          return "Fair";
-        case 3:
-          return "Moderate";
-        case 4:
-          return "Poor";
-        case 5:
-          return "Very Poor";
-        default:
-          return "Unknown";
-      }
-    }
-
-    const aqiStatus = getAqiStatus(aqiValue);
-
-    // Pollutant components
-    const pm25 = aqiComponents.pm2_5; // PM2.5
-    const so2 = aqiComponents.so2; // Sulfur Dioxide
-    const no2 = aqiComponents.no2; // Nitrogen Dioxide
-    const o3 = aqiComponents.o3; // Ozone
-
-    // 7. Extract additional weather details (humidity, pressure, etc.)
-    // 7. Extract additional weather details
-    const tempValue = Math.round(weatherData.current.temp);
-    const humidity = weatherData.current.humidity;
-    const pressure = weatherData.current.pressure;
-    const visibilityMeters = weatherData.current.visibility || 0;
-    const visibility = (visibilityMeters / 1000).toFixed(1);
-    const feelsLike = Math.round(weatherData.current.feels_like);
-    // Generate a dynamic summary
+    // Generate "highlights" text
     const highlights = generateHighlights(
-      tempValue,
-      humidity,
-      pressure,
-      visibility,
+      Math.round(weatherData.current.temp),
+      weatherData.current.humidity,
+      weatherData.current.pressure,
+      (weatherData.current.visibility || 0) / 1000,
       aqiStatus
     );
 
+    // ================================
+    //  Log search queries
+    // ================================
+    const dataFilePath = path.join(__dirname, "..", "searchData.json");
+    if (!fs.existsSync(dataFilePath)) {
+      fs.writeFileSync(dataFilePath, "[]");
+    }
+    fs.readFile(dataFilePath, "utf8", (err, data) => {
+      const searchData = data ? JSON.parse(data) : [];
+      searchData.push({
+        city: locationName,
+        lat,
+        lon,
+        timestamp: new Date().toISOString(),
+      });
+      fs.writeFile(dataFilePath, JSON.stringify(searchData, null, 2), () => {});
+    });
 
-     // *** NEW *** LOG SEARCH TO A FILE
-     const dataFilePath = path.join(__dirname, "..", "searchData.json");
-     const newSearch = {
-       city: city,
-       lat,
-       lon,
-       timestamp: new Date().toISOString(),
-     };
- 
-     fs.readFile(dataFilePath, "utf8", (err, data) => {
-       if (err) {
-         // If file not found or error reading, we log it but don't stop
-         console.error("Could not read searchData.json:", err.message);
-       }
- 
-       let searchData = [];
-       if (data) {
-         try {
-           searchData = JSON.parse(data);
-         } catch (parseErr) {
-           console.error("Error parsing JSON:", parseErr);
-         }
-       }
- 
-       // Add the new search record
-       searchData.push(newSearch);
- 
-       // Write back to the file
-       fs.writeFile(dataFilePath, JSON.stringify(searchData, null, 2), (writeErr) => {
-         if (writeErr) {
-           console.error("Error writing to searchData.json:", writeErr.message);
-         }
-       });
-     });
-     // *** END LOG SEARCH TO A FILE
+    // ================================
+    //  Load random fact from facts.json
+    // ================================
+    let facts = [];
+    const factsFilePath = path.join(__dirname, "..", "facts.json");
+    try {
+      const factsData = fs.readFileSync(factsFilePath, "utf8");
+      facts = JSON.parse(factsData);
+    } catch (err) {
+      console.error("Error reading facts file:", err);
+      facts = ["Lightning strikes Earth about 8 million times per day."];
+    }
+    const randomFact = facts[Math.floor(Math.random() * facts.length)];
 
-
-     
-    // 8. Render the EJS template
-    // Pass the values you need for the "Today's Forecast" section, as well as
-    // anything else (like current weather, forecast, etc.) for the page.
+    // ================================
+    //  Render the EJS template
+    // ================================
     res.render("index", {
       current,
       forecast,
       todayName,
-
-      // Air Quality data
-      pm25,
-      so2,
-      no2,
-      o3,
+      pm25: aqiData.list[0].components.pm2_5,
+      so2: aqiData.list[0].components.so2,
+      no2: aqiData.list[0].components.no2,
+      o3: aqiData.list[0].components.o3,
       aqiStatus,
-
-      // Additional details
-      humidity,
-      pressure,
-      visibility,
-      feelsLike,
+      humidity: weatherData.current.humidity,
+      pressure: weatherData.current.pressure,
+      visibility: (weatherData.current.visibility || 0) / 1000,
+      feelsLike: Math.round(weatherData.current.feels_like),
       highlightsText: highlights,
+      didYouKnow: randomFact,
     });
   } catch (error) {
     console.error(error.message);
     res.render("error", {
-      error: error.message || "Unable to fetch weather data. Please try again.",
+      error: error.message || "Weather data unavailable. Try again later.",
     });
   }
 });

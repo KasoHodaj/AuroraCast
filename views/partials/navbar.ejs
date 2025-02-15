@@ -1,479 +1,382 @@
-<nav>
-  <div class="icon"><b>AuroraCast.</b></div>
 
-  <form class="search-box" action="/" method="GET">
-    <!--TODO-->
-    <input
-      name="city"
-      type="text"
-      placeholder="Enter city"
-      autocomplete="off"
-      required
-    />
-    <button type="submit"><span class="fa fa-search"></span></button>
-  </form>
+<nav class="navbar navbar-expand-lg navbar-dark align-items-center">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+      <span class="brand-text">AuroraCast</span>
+      <span class="brand-dot">.</span>
+    </a>
 
-  <ol>
-    <li>
-      <button data-dropdown="language">
-        <i class="fa-solid fa-language"></i>Language
-      </button>
-      <ul class="dropdown language">
-        <li><button>Albanian</button></li>
-        <li><button>English</button></li>
-        <li><button>Greek</button></li>
-        <li><button>Italian</button></li>
+    <!-- Search Box for Large Screens -->
+    <form class="d-none d-lg-block search-form" action="/" method="GET">
+      <div class="input-group">
+        <input type="text" name="city" class="form-control search-input" placeholder="Enter city" autocomplete="off" required />
+        <button class="btn search-button" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </form>
+
+    <!-- Hamburger -->
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Content -->
+    <div class="collapse navbar-collapse" id="navLinks">
+      <!-- Mobile Search -->
+      <form class="d-lg-none search-form-mobile" action="/" method="GET">
+        <div class="input-group">
+          <input type="text" name="city" class="form-control search-input" placeholder="Enter city" autocomplete="off" required />
+          <button class="btn search-button" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </form>
+
+      <!-- Nav Links -->
+      <ul class="navbar-nav ms-auto">
+        <!-- Language Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" data-bs-toggle="dropdown">
+            <i class="fa-solid fa-language"></i> <span id="currentLanguage">Language</span>
+          </a>          
+          <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+            <li><button class="dropdown-item lang-option" data-lang="sq">Albanian</button></li>
+            <li><button class="dropdown-item lang-option" data-lang="en">English</button></li>
+            <li><button class="dropdown-item lang-option" data-lang="el">Greek</button></li>
+            <li><button class="dropdown-item lang-option" data-lang="it">Italian</button></li>
+          </ul>
+        </li>
+        
+
+        <!-- Theme Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="themeDropdown" data-bs-toggle="dropdown">
+            <i id="themeIcon" class="fa-solid"></i> Theme
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+            <li>
+              <button class="dropdown-item" id="lightThemeBtn">Light Mode</button>
+            </li>
+            <li>
+              <button class="dropdown-item" id="darkThemeBtn">Dark Mode</button>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Location Button -->
+        <li class="nav-item">
+          <button type="button" class="btn location-button" id="detectLocationBtn">
+            <i class="fa-solid fa-location-crosshairs"></i> Location
+          </button>
+        </li>
       </ul>
-    </li>
-    <li>
-      <button data-dropdown="theme">
-        <i class="fa-solid fa-circle-half-stroke"></i>Theme
-      </button>
-      <ul class="dropdown theme">
-        <li><button>Light Mode</button></li>
-        <li><button>Dark Mode</button></li>
-      </ul>
-    </li>
-    <li>
-      <button>
-        <i class="fa-solid fa-location-crosshairs"></i>Currect Location
-      </button>
-    </li>
-  </ol>
-
-  <div class="bar">
-    <span class="fa fa-bars" id="bars"></span>
-    <span class="fa fa-times hidden" id="times"></span>
+    </div>
   </div>
 </nav>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const bar = document.querySelector(".bar");
-    const barsIcon = document.getElementById("bars");
-    const timesIcon = document.getElementById("times");
-    const menu = document.querySelector("nav > ol");
+    const currentLanguageElement = document.getElementById("currentLanguage");
 
-    bar.addEventListener("click", function () {
-      // Toggle the .open class on the <ol>
-      menu.classList.toggle("open");
+    function setLanguage(lang, translations) {
+      if (!translations[lang]) return;
+      console.log("Setting language to:", lang);
 
-      // Toggle which icon (bars or times) is hidden
-      barsIcon.classList.toggle("hidden");
-      timesIcon.classList.toggle("hidden");
-    });
-  });
+      // Update text content for various elements
+      const navbarBrand = document.querySelector(".navbar-brand");
+      if (navbarBrand) navbarBrand.textContent = translations[lang].navbar_brand;
+      
+      const headerP = document.querySelector("header p");
+      if (headerP) headerP.textContent = translations[lang].tagline;
+      
+      const currentWeatherH2 = document.getElementById("current-weather")?.querySelector("h2");
+      if (currentWeatherH2) currentWeatherH2.textContent = translations[lang].now;
+      
+      const todaysForecastH2 = document.getElementById("todays-forecast")?.querySelector("h2");
+      if (todaysForecastH2) todaysForecastH2.textContent = translations[lang].todays_forecast;
+      
+      const airQualityH3 = document.querySelector(".air-quality h3");
+      if (airQualityH3) airQualityH3.textContent = translations[lang].air_quality;
+      
+      const highlightsH3 = document.querySelector(".highlights h3");
+      if (highlightsH3) highlightsH3.textContent = translations[lang].highlights;
+      
+      const weeklyForecastH2 = document.getElementById("weekly-forecast")?.querySelector("h2");
+      if (weeklyForecastH2) weeklyForecastH2.textContent = translations[lang].weekly_forecast;
+      
+      const hourlyWeatherH3 = document.getElementById("hourly-weather")?.querySelector("h3");
+      if (hourlyWeatherH3) hourlyWeatherH3.textContent = translations[lang].hourly_forecast;
+      
+      const didYouKnowH2 = document.getElementById("did-you-know")?.querySelector("h2");
+      if (didYouKnowH2) didYouKnowH2.textContent = translations[lang].did_you_know;
+      
+      const footerP = document.querySelector("footer p");
+      if (footerP) footerP.textContent = translations[lang].footer;
+      
+      const detectLocationBtn = document.getElementById("detectLocationBtn");
+      if (detectLocationBtn) {
+        detectLocationBtn.innerHTML = `<i class="fa-solid fa-location-crosshairs"></i> ${translations[lang].location_btn}`;
+      }
+      
+      // Update only the inner span of the language dropdown
+      currentLanguageElement.textContent = translations[lang].language_btn;
+      
+      // Save language preference in localStorage
+      localStorage.setItem("selectedLanguage", lang);
+    }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Select all dropdown toggle buttons
-    const dropdownButtons = document.querySelectorAll("[data-dropdown]");
+    function loadLanguage() {
+      fetch("/data/languages.json")
+        .then(response => response.json())
+        .then(translations => {
+          console.log("Translations loaded:", translations);
+          // Get saved language or default to English
+          const savedLang = localStorage.getItem("selectedLanguage") || "en";
+          setLanguage(savedLang, translations);
 
-    dropdownButtons.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        const dropdownType = button.getAttribute("data-dropdown");
-        const dropdownMenu = document.querySelector(
-          `.dropdown.${dropdownType}`
-        );
+          // Attach event listeners for language change
+          document.querySelectorAll(".lang-option").forEach(button => {
+            button.addEventListener("click", function () {
+              const selectedLang = this.getAttribute("data-lang");
+              setLanguage(selectedLang, translations);
+            });
+          });
+        })
+        .catch(error => console.error("Error loading language file:", error));
+    }
 
-        // Close other open dropdowns
-        document.querySelectorAll(".dropdown.active").forEach((menu) => {
-          if (menu !== dropdownMenu) {
-            menu.classList.remove("active");
-          }
-        });
-
-        // Toggle the current dropdown
-        dropdownMenu.classList.toggle("active");
-
-        // Prevent propagation to avoid unwanted closures
-        event.stopPropagation();
-      });
-    });
-
-    // Close dropdowns when clicking outside
-    document.addEventListener("click", () => {
-      document.querySelectorAll(".dropdown.active").forEach((menu) => {
-        menu.classList.remove("active");
-      });
-    });
+    loadLanguage();
   });
 </script>
 
-<style>
+
+<!-- Use My Location Script -->
+<script>
+  document.getElementById("detectLocationBtn").addEventListener("click", () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          // Redirect to the weather route with the lat & lon as query parameters
+          window.location.href = `/?lat=${lat}&lon=${lon}`;
+        },
+        (error) => {
+          alert("Unable to retrieve your location. Check browser permissions.");
+        }
+      );
+    } else {
+      alert("Geolocation not supported by your browser.");
+    }
+  });
+</script>
 
 
-  nav {
-    display: flex;
-    width: 100%; 
-    box-sizing: border-box;
-    background: #003366;
-    position: relative;
-    justify-content: space-between;
-    text-align: center;
-    padding: 15px;
-    margin: 0;
-  }
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-9ti2GwaNDz3B2VTxXyZnCAzKqL24K/ygk0s3uPiIcJVVBlspCBIC1Qsr6F5CHcQv" crossorigin="anonymous"></script>
 
   
+<style>
 
-  /* AuroraCast Icon */
-  nav > .icon {
-    font-size: 35px;
-    font-weight: 800;
-    color: white;
-    cursor: pointer;
+  .navbar {
+    background: linear-gradient(135deg, #003366 0%, #004080 100%);
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
 
-  nav > .icon > b:hover {
-    text-shadow: 0 0 3px #ffffff, 0 0 10px #ff00ff, 0 0 20px #00ffff, 0 0 20px black;
-    transition: text-shadow 0.1s ease-in-out;
+  /* Brand Styles */
+  .navbar-brand {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-right: 2rem;
+    transition: transform 0.2s;
+    gap: 50px;
   }
 
-  /* Buttons List (Desktop view) */
-  nav > ol {
+  .navbar-brand:hover {
+    transform: scale(1.05);
+  }
+
+  .navbar-nav {
     display: flex;
-    list-style: none;
-    margin: auto 0;
-    transition: 0.3s;
+    gap: 1rem;
   }
 
-  nav > ol > li {
-    margin: 0 4px;
+  .brand-dot {
+    color: #00a8ff;
   }
 
-  nav > ol > li > button,
-  nav ol li ul li button {
+
+  .search-form {
+    min-width: 300px;
+    max-width: 500px;
+    width: 40%;
+    margin: 0 auto;
+  }
+
+  .search-input {
+    border-radius: 25px 0 0 25px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    color: white !important;
+    padding: 0.63rem 1.3rem;
+    transition: all 0.3s ease;
+  }
+
+  .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .search-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #00a8ff;
+    box-shadow: 0 0 0 2px rgba(0, 168, 255, 0.2);
+  }
+
+  .search-button {
+    border-radius: 0 25px 25px 0;
+    background: #00a8ff;
     color: white;
-    border: 0.5px solid white;
-    border-radius: 5px;
-    background: #007b9e;
-    font-size: 16px;
-    text-transform: capitalize;
-    letter-spacing: 1px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  nav > ol > li:hover > button,
-  nav ol li ul li button:hover {
-    background: white;
-    color: #007b9e;
-  }
-
-  /* body > nav > ol > li:nth-child(1) > ol,
-  body > nav > ol > li:nth-child(2) > ol{
-    visibility: hidden;
-    height: 0;
-  } */
-
-  /* General Dropdown Menu Styles */
-  nav ol li ul {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #444;
-    color: white;
-    display: none;
-    /* Hidden by default */
-    flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    z-index: 100;
-  }
-
-  nav ol li ul li button {
-    background: none;
     border: none;
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.3s ease;
   }
 
-  nav ol li ul li button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
+  .search-button:hover {
+    background: #0090dd;
+    transform: translateX(2px);
   }
 
-  /* Show Dropdown on Active */
-  nav ol li ul.active {
-    display: flex;
-  }
-
-  /* Search box (Desktop view) */
-  nav > .search-box {
-    display: flex;
-    margin: auto 0;
-    height: 35px;
-    line-height: 35px;
-    position: relative;
-  }
-
-  nav > .search-box > input {
+  /* Dropdown Styles */
+  .custom-dropdown {
+    background: #ffffff;
     border: none;
-    outline: none;
-    background: white;
-    height: 100%;
-    padding: 0 10px;
-    font-size: 16px;
-    width: 400px;
-    border-radius: 3px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem;
   }
 
-  nav > .search-box > button > span {
+  .dropdown-item {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s;
+  }
+
+  .dropdown-item:hover {
+    background: rgba(0, 168, 255, 0.1);
     color: #003366;
-    font-size: 20px;
-    background: white;
-    height: 100%;
-    padding: 8px;
-    position: relative;
-    cursor: pointer;
-    z-index: 1;
-    margin: 0;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 3px;
+    transform: translateX(4px);
   }
 
-  nav > .search-box > button > span::after {
-    height: 100%;
-    width: 0%;
-    content: "";
-    background: #007b9e;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: -1;
-    transition: 0.3s;
-  }
 
-  nav > .search-box > button > span:hover::after {
-    width: 100%;
-  }
-
-  /* Bar icons (mobile menu) */
-  nav > .bar {
-    position: relative;
-    margin: auto;
-    display: none;
-    /* hidden by default on larger screens */
-    cursor: pointer;
-  }
-
-  nav > .bar > span {
-    position: absolute;
-    right: 0;
+  .location-button {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     color: white;
-    font-size: 35px;
+    border-radius: 25px;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.3s ease;
   }
 
-  /* Utility class to hide an element */
-  .hidden {
-    display: none !important;
+  .location-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #00a8ff;
+    color: white;
+    transform: translateY(-2px);
   }
 
-  /* Dropdown */
-  .dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #003366;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    list-style-type: none;
-    margin: 0;
-    padding: 5px 0;
-    z-index: 10;
+  /* Mobile Styles */
+  @media (max-width: 991px) {
+    .navbar {
+      padding: 0.75rem;
+    }
+
+
+    .navbar-nav {
+      gap: 0.5rem;
+    }
+
+
+    .search-form-mobile {
+      margin: 1rem 0;
+      width: 100%;
+    }
+
+    .navbar-collapse {
+      background: rgba(0, 51, 102, 0.95);
+      border-radius: 12px;
+      margin-top: 1rem;
+      padding: 1rem;
+    }
+
+    .nav-item {
+      margin: 0.5rem 0;
+    }
+
+    .location-button {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
   }
 
-  /* Media Query for smaller screens */
-  @media screen and (max-width: 1000px) {
-    /* Basic nav container styles */
-    nav {
-      display: block;
-      padding: 0;
-      width: 100%;
+  /* Small Screen Optimizations */
+  @media (max-width: 576px) {
+    .navbar-brand {
+      font-size: 1.5rem;
     }
 
-    nav > .icon {
-      display: inline-block;
-      padding: 15px 30px;
+    .search-input {
+      font-size: 0.95rem;
     }
 
-    /* Search box styles */
-    nav > .search-box {
-      width: 100%;
-      display: inline-flex;
-      justify-content: center;
-      margin-bottom: 15px;
+    .nav-link {
+      font-size: 0.95rem;
+      padding: 0.5rem 0.75rem;
     }
+  }
 
-    nav > .search-box > input {
-      width: 90%;
-      position: relative;
-    }
+  /* Custom Toggler */
+  .custom-toggler {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0.375rem 0.75rem;
+    transition: all 0.3s ease;
+  }
 
-    nav > .search-box > button {
-      position: absolute;
-      right: 5%;
-      top: 0;
-      height: 100%;
-    }
+  .custom-toggler:hover {
+    border-color: #00a8ff;
+    transform: scale(1.05);
+  }
 
-    /* Navigation menu styles */
-    nav > ol {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: #003366;
-      height: 0;
+  /* Animation for Dropdown */
+  .dropdown-menu {
+    animation: dropdownFade 0.4s ease;
+  }
+
+  @keyframes dropdownFade {
+    from {
       opacity: 0;
-      overflow: hidden;
-      transform: translateY(-20px);
-      transition: all 0.3s ease;
-      max-height: 0;
-      width: 100%;
-    }
-
-    nav > ol.open {
-      opacity: 1;
-      height: auto;
-      max-height: 500px;
-      transform: translateY(0);
-    }
-
-    /* List item styles */
-    nav > ol > li {
-      text-align: center;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    nav > ol.open > li {
-      opacity: 1;
-      transform: translateY(0);
-      z-index: 10;
-    }
-
-    /* Button styles */
-    nav > ol > li > button {
-      color: white;
-      font-size: 16px;
-      padding: 15px;
-      display: block;
-      background: #007b9e;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      width: 80%;
-      max-width: 300px;
-      margin: 10px 0;
-      text-align: center;
-      transition: background-color 0.3s;
-    }
-
-    nav > ol > li > button:hover {
-      background: #005f7f;
-      color: white;
-    }
-
-    /* Dropdown menu styles */
-    nav ol li ul {
-      position: static;
-      width: 80%;
-      max-width: 300px;
-      margin: 0 auto;
-      background: #444;
-      box-shadow: none;
-    }
-
-    nav ol li ul li button {
-      width: 100%;
-      padding: 10px;
-      text-align: center;
-      color: white;
-    }
-
-    /* Hamburger menu icon */
-    nav > .bar {
-      display: block;
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-
-    nav > .bar > span {
-      font-size: 35px;
-      color: white;
-      transition: color 0.3s ease;
-    }
-
-    nav > .bar > span:hover {
-      color: #007b9e;
-    }
-
-    nav ol li {
-      position: relative; /* Enable absolute positioning of dropdown */
-    }
-
-    nav ol li ul.dropdown {
-      position: absolute;
-      top: 5%; /* Position above the button */
-      left: 100%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 300px;
-      height: 100%;
-      opacity: 0;
-      background: #005f7f;
-      border-radius: 5px;
-      overflow: hidden;
-      transition: all 0.3s ease-in-out;
-      z-index: 100; /* Ensure dropdown appears above other elements */
-    }
-
-    nav ol li ul.dropdown.active {
-      height: auto;
-      opacity: 1;
-      pointer-events: all;
-      padding: 5px 0;
-      position: sticky;
-    }
-
-    nav ol li ul.dropdown li {
       transform: translateY(-10px);
-      opacity: 0;
-      transition: all 0.3s ease-in-out;
     }
 
-    nav ol li ul.dropdown.active li {
-      transform: translateY(0);
+    to {
       opacity: 1;
-    }
-
-    nav ol li ul.dropdown li button {
-      width: 100%;
-      padding: 10px 20px;
-      background: transparent;
-      color: white;
-      text-align: center;
-      border: none;
-      transition: background-color 0.3s ease;
-    }
-
-    nav ol li ul.dropdown li button:hover {
-      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(0);
     }
   }
 </style>
+
+
+<script>
+  // Function to show a message when clicking theme options
+  function showThemeMessage() {
+    alert("Theme switching is not available yet, but it's coming in a future update. Stay tuned!");
+  }
+
+  // Attach event listeners to theme buttons
+  document.getElementById("lightThemeBtn").addEventListener("click", showThemeMessage);
+  document.getElementById("darkThemeBtn").addEventListener("click", showThemeMessage);
+</script>

@@ -14,26 +14,25 @@
 
 
     <%- include('partials/navbar') %> <!-- Navbar partial -->
+  
+        <%- include('partials/mainContent', {
+            forecast: forecast,
+            todayName: todayName,
+            current: current,
+            pm25: pm25,
+            so2: so2,
+            no2: no2,
+            o3: o3,
+            aqiStatus: aqiStatus,
+            humidity: humidity,
+            pressure: pressure,
+            visibility: visibility,
+            feelsLike: feelsLike,
+            highlightsText: highlightsText,
+            didYouKnow: didYouKnow
+        }) %>
 
 
-    <%- include('partials/mainContent', {
-        forecast: forecast,
-        todayName: todayName,
-        current: current,
-        pm25: pm25,
-        so2: so2,
-        no2: no2,
-        o3: o3,
-        aqiStatus: aqiStatus,
-        humidity: humidity,
-        pressure: pressure,
-        visibility: visibility,
-        feelsLike: feelsLike,
-        highlightsText: highlightsText
-    }) %>
-
-    
-    <%- include('partials/footer') %> <!-- Footer partial -->
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

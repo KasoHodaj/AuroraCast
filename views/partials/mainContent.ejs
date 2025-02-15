@@ -1,253 +1,280 @@
 <header>
-  <p>“Under the Aurora, We Begin Our Journey”</p>
+  <p>Under the Aurora, We Begin Our Journey</p>
 </header>
 
-<main class="vh-100">
+<main class="vh-100"> <!-- Sets viewport height to 100% to ensure full-page layout -->
+
   <!-- Current Weather Section -->
   <section id="current-weather">
     <div class="weather-now">
       <h2>Now</h2>
       <div class="temperature">
-        <span id="current-temp" class="temp-value"><%= current.temp %></span>
-        <img
-          id="current-icon"
-          src="<%= current.icon %>"
-          alt="<%= current.condition %> icon"
-        />
+        <!-- Display current temperature -->
+        <span id="current-temp" class="temp-value">
+          <%= current.temp %>
+        </span>
+        <!-- Weather icon corresponding to current conditions -->
+        <img id="current-icon" src="<%= current.icon %>" alt="<%= current.condition %> icon" />
       </div>
-      <p id="current-condition"><%= current.condition %></p>
-      <span id="horizontal-line"></span>
-      <p id="current-date"><%= current.date %></p>
-      <p id="current-location"><%= current.location %></p>
+      <p id="current-condition">
+        <%= current.condition %>
+      </p>
+      <span id="horizontal-line"></span> <!-- Visual separator -->
+      <p id="current-date">
+        <%= current.date %>
+      </p>
+      <p id="current-location">
+        <%= current.location %>
+      </p>
     </div>
   </section>
 
   <!-- Today's Forecast Section -->
-<!-- Today's Forecast Section -->
-<section id="todays-forecast">
-  <h2>Today's Forecast</h2>
-  
-  <div class="air-quality">
-    <h3>Air Quality Index</h3>
-    
-    <div id="aqi-details" class="aqi-details">
-      <div>
-        <div id="aqi-details">
-          <div id="weather-icon">
-            <img
-              style="width: 40px"
-              src="/assets/wind.png"
-              alt="windy wind image"
-            />
-          </div>
-          <div id="particulate-matter">
-            <p>PM<sub>2.5</sub></p>
-            <span><%= pm25 || '--' %></span>
-          </div>
-          <div id="sulfur-dioxide">
-            <p>SO<sub>2</sub></p>
-            <span><%= so2 || '--' %></span>
-          </div>
-          <div id="nitrogen-dioxide">
-            <p>NO<sub>2</sub></p>
-            <span><%= no2 || '--' %></span>
-          </div>
-          <div id="ozone">
-            <p>O<sub>3</sub></p>
-            <span><%= o3 || '--' %></span>
+  <section id="todays-forecast">
+    <h2>Today's Forecast</h2>
+
+    <!-- Air Quality Information -->
+    <div class="air-quality">
+      <h3>Air Quality Index</h3>
+
+      <div id="aqi-details" class="aqi-details">
+        <div>
+          <div id="aqi-details">
+            <div id="weather-icon">
+              <img style="width: 40px" src="/assets/wind.png" alt="windy wind image" />
+            </div>
+            <!-- Display pollutant concentration levels -->
+            <div id="particulate-matter">
+              <p>PM<sub>2.5</sub></p>
+              <span>
+                <%= pm25 || '--' %>
+              </span>
+            </div>
+            <div id="sulfur-dioxide">
+              <p>SO<sub>2</sub></p>
+              <span>
+                <%= so2 || '--' %>
+              </span>
+            </div>
+            <div id="nitrogen-dioxide">
+              <p>NO<sub>2</sub></p>
+              <span>
+                <%= no2 || '--' %>
+              </span>
+            </div>
+            <div id="ozone">
+              <p>O<sub>3</sub></p>
+              <span>
+                <%= o3 || '--' %>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    
-    <div id="aqi-status" class="aqi-status">
-      <%= aqiStatus || 'Good' %>
-    </div>
-  </div>
 
-  <div class="highlights">
-    <h3>Highlights</h3>
-    <p id="highlights-text">
-      <%= highlightsText || 'Currently, conditions are mild, with moderate humidity, stable atmospheric pressure, and clear visibility. Air quality is classified as Good, indicating minimal pollutant levels.' %>
-    </p>
-  </div>
-
-  <div class="forecast-details">
-    <div>
-      <p>Humidity</p>
-      <img src="/assets/humidity.png" alt="humidity icon" />
-      <span id="humidity"><%= humidity ? humidity + '%' : '--%' %></span>
+      <!-- Display Air Quality Status -->
+      <div id="aqi-status" class="aqi-status">
+        <%= aqiStatus || 'Good' %>
+      </div>
     </div>
 
-    <div>
-      <p>Pressure</p>
-      <img src="/assets/barometer.png" alt="pressure icon" />
-      <span id="pressure"><%= pressure ? pressure + ' hPa' : '---- hPa' %></span>
+    <!-- Highlights Section: Dynamic Summary of Current Weather Conditions -->
+    <div class="highlights">
+      <h3>Highlights</h3>
+      <p id="highlights-text">
+        <%= highlightsText
+          || 'Currently, conditions are mild, with moderate humidity, stable atmospheric pressure, and clear visibility. Air quality is classified as Good, indicating minimal pollutant levels.'
+          %>
+      </p>
     </div>
 
-    <div>
-      <p>Visibility</p>
-      <img src="/assets/visibility.png" alt="visibility icon" />
-      <span id="visibility"><%= visibility ? visibility + ' KM' : '-- KM' %></span>
+    <!-- Additional Weather Metrics -->
+    <div class="forecast-details">
+      <div>
+        <p>Humidity</p>
+        <img src="/assets/humidity.png" alt="humidity icon" />
+        <span id="humidity">
+          <%= humidity ? humidity + '%' : '--%' %>
+        </span>
+      </div>
+
+      <div>
+        <p>Pressure</p>
+        <img src="/assets/barometer.png" alt="pressure icon" />
+        <span id="pressure">
+          <%= pressure ? pressure + ' hPa' : '---- hPa' %>
+        </span>
+      </div>
+
+      <div>
+        <p>Visibility</p>
+        <img src="/assets/visibility.png" alt="visibility icon" />
+        <span id="visibility">
+          <%= visibility ? visibility + ' KM' : '-- KM' %>
+        </span>
+      </div>
+
+      <div>
+        <p>Feels Like</p>
+        <img src="/assets/thermometer.png" alt="thermometer icon" />
+        <span id="feels-like">
+          <%= feelsLike ? feelsLike + '°C' : '--°C' %>
+        </span>
+      </div>
     </div>
+  </section>
 
-    <div>
-      <p>Feels Like</p>
-      <img src="/assets/thermometer.png" alt="thermometer icon" />
-      <span id="feels-like"><%= feelsLike ? feelsLike + '°C' : '--°C' %></span>
-    </div>
-  </div>
-</section>
-
-
+  <!-- Weekly Forecast Section -->
   <section id="weekly-forecast">
     <h2>7 Days Forecast</h2>
     <div id="weekly-forecast-grid" class="forecast-grid">
-      <% forecast.forEach(day => { %>
-      <div class="forecast-row <%= day.name === todayName ? 'today' : '' %>">
-        <div class="day-name"><%= day.name %></div>
-        <div class="date"><%= day.date %></div>
-        <div class="weather-icon">
-          <img
-            src="<%= day.icon || '/assets/default-icon.png' %>"
-            alt="<%= day.description || 'Weather description not available' %>"
-          />
+      <% forecast.forEach(day=> { %>
+        <div class="forecast-row <%= day.name === todayName ? 'today' : '' %>">
+          <div class="day-name">
+            <%= day.name %>
+          </div>
+          <div class="date">
+            <%= day.date %>
+          </div>
+          <div class="weather-icon">
+            <img src="<%= day.icon || '/assets/default-icon.png' %>"
+              alt="<%= day.description || 'Weather description not available' %>" />
+          </div>
+          <div class="temp">
+            <%= day.temp %>
+          </div>
         </div>
-        <div class="temp"><%= day.temp %></div>
-      </div>
-      <% }); %>
+        <% }); %>
     </div>
   </section>
 
+  <!-- Hourly Forecast Section -->
   <section id="hourly-weather">
     <h3>Hourly Forecast</h3>
-  
+
     <!-- Temperature Forecast -->
     <div id="hourly-grid" class="hourly-grid">
-      <% ["Morning", "Afternoon", "Evening", "Overnight"].forEach((time, index) => { %>
+      <% ["Morning", "Afternoon" , "Evening" , "Overnight" ].forEach((time, index)=> { %>
         <div class="hourly-time">
-          <p><%= time %></p>
-          <img src="<%= forecast[index]?.icon || '/assets/default-weather.png' %>" alt="<%= forecast[index]?.description || 'Weather' %>" />
-          <span><%= forecast[index]?.temp || 'N/A' %></span>
+          <p>
+            <%= time %>
+          </p>
+          <img src="<%= forecast[index]?.icon || '/assets/default-weather.png' %>"
+            alt="<%= forecast[index]?.description || 'Weather' %>" />
+          <span>
+            <%= forecast[index]?.temp || 'N/A' %>
+          </span>
         </div>
-      <% }); %>
+        <% }); %>
     </div>
-  
+
     <!-- Wind Speed Forecast -->
     <div id="hourly-wind-grid" class="hourly-grid">
-      <% ["Morning", "Afternoon", "Evening", "Overnight"].forEach((time, index) => { %>
+      <% ["Morning", "Afternoon" , "Evening" , "Overnight" ].forEach((time, index)=> { %>
         <div class="hourly-time">
-          <p><%= time %></p>
+          <p>
+            <%= time %>
+          </p>
           <img src="/assets/send.png" alt="Windy" />
-          <span><%= forecast[index]?.wind_speed || 'N/A' %></span>
+          <span>
+            <%= forecast[index]?.wind_speed || 'N/A' %>
+          </span>
         </div>
-      <% }); %>
+        <% }); %>
     </div>
   </section>
-  
 
   <!-- Did You Know Section -->
   <section id="did-you-know">
     <h2>Did you know?</h2>
-    <p id="fun-fact">Lightning strikes Earth about 8 million times per day.</p>
+    <p id="fun-fact">
+      <%= didYouKnow %>
+    </p>
   </section>
+
+
+  <section id="footer">
+    <footer>
+      <p>© 2024 AuroraCast. Created by Kaso Hodaj</p>
+      <nav>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-and-conditions">Terms and Conditions</a>
+        <a href="/read-me">README</a>
+      </nav>
+    </footer>
+  </section>
+  
 </main>
 
 <style>
   /* General Reset */
-
   main {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    /* Left, Center, Right columns */
     gap: 20px;
     padding: 15px;
-    max-width: 1300px;
     margin: 0 auto;
+    width: 100%;
+    max-width: 1300px;
   }
 
-  /* Header */
+  /* Header Styles */
   header {
     text-align: center;
-    margin: 10px auto; /* Smaller vertical spacing */
-    padding: 8px 12px; /* Reduced padding for a compact look */
-    background: linear-gradient(
-      90deg,
-      #e1f5fe 0%,
-      #f0faff 100%
-    ); /* Subtle gradient */
-    border-radius: 5px; /* Slightly smaller rounding */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle and compact shadow */
-    max-width: 500px; /* Reduced max width for compactness */
-    animation: fadeIn 1.1s ease-in-out; /* Smooth fade-in */
+    margin: 10px auto;
+    padding: 8px 12px;
+    background: linear-gradient(90deg, #e1f5fe 0%, #f0faff 100%);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    animation: fadeIn 1.1s ease-in-out;
   }
 
   header p {
     font-style: italic;
-    font-size: 1rem; /* Reduced font size */
+    font-size: 1rem;
     font-weight: 500;
-    color: #007b9e; /* Blue color */
+    color: #007b9e;
     font-family: "Georgia", "Times New Roman", serif;
-    letter-spacing: 0.8px; /* Slightly tighter spacing */
-    line-height: 1.4; /* Reduced line height */
-    margin: 0; /* Remove extra margin */
+    letter-spacing: 0.8px;
+    line-height: 1.4;
+    margin: 0;
   }
 
   header:before,
   header:after {
     content: "";
     display: block;
-    width: 80px; /* Slightly larger decorative lines */
-    height: 1px; /* Thinner line */
+    width: 80px;
+    height: 1px;
     background: #007b9e;
-    margin: 8px auto; /* Reduced spacing */
+    margin: 8px auto;
   }
 
   @keyframes fadeIn {
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
   }
 
-  @media (max-width: 600px) {
-    header {
-      max-width: 90%; /* Adapt width for smaller screens */
-      padding: 10px; /* Adjust padding for mobile */
-    }
-
-    header p {
-      font-size: 1rem; /* Smaller text for smaller screens */
-    }
-
-    header:before,
-    header:after {
-      width: 40px; /* Shorter lines on mobile */
-    }
-  }
-
   /* Current Weather Section */
   #current-weather {
-    grid-column: 1 / 2;
-    /* Left column */
-    grid-row: 1 / 2;
-    text-align: center;
+    text-align: left;
     background-color: #fff;
     border-radius: 10px;
     padding: 30px;
     width: 100%;
     height: 100%;
-    min-width: 350px;
-    text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   #current-weather:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02); /* Slight zoom on hover */
+    transform: scale(1.02);
   }
 
   #current-weather h2 {
@@ -268,13 +295,13 @@
 
   #current-icon {
     width: 100px;
-    filter: brightness(0.9); /* Brightens */
+    filter: brightness(0.9);
   }
 
   #current-condition {
     margin-top: 1rem;
     margin-bottom: 0.7rem;
-    font-size: 1.2rem; /* Larger for emphasis */
+    font-size: 1.2rem;
     font-weight: bold;
     color: #555;
   }
@@ -287,44 +314,31 @@
     margin: 10px 0;
   }
 
-  #current-date {
-    margin-top: 0rem;
-    margin-bottom: 0.2rem;
-    font-size: 0.9rem;
-  }
-
-  #current-location {
-    margin-bottom: -1rem;
-    font-size: 0.9rem;
-  }
-
   #current-date,
   #current-location {
     font-size: 0.9rem;
     color: #555;
+    margin: 0.2rem 0;
   }
 
-  /* Today's Forecast */
+  /* Today's Forecast Section */
   #todays-forecast {
-    grid-column: 2 / 4;
-    /* Center column */
-    grid-row: 1 / 3;
     gap: 30px;
     display: grid;
-    grid-template-columns: 2fr 2fr; /* Left column for Air Quality, Right column for Highlights */
-    grid-template-rows: auto 1fr 1fr; /* Rows for top (AQI and Highlights) and bottom (Forecast Details) */
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: auto 1fr 1fr;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
     width: 100%;
     height: 100%;
-    min-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   #todays-forecast:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02); /* Slight zoom on hover */
+    transform: scale(1.02);
   }
 
   #todays-forecast h2 {
@@ -333,34 +347,24 @@
     color: #002b5c;
   }
 
-  /* Air Quality */
+  /* Air Quality Section */
   .air-quality {
     grid-column: 1/2;
     grid-row: 2/3;
     display: grid;
     grid-template-columns: 1fr auto;
-    /* Title and status in two columns */
     grid-template-rows: auto auto;
-    /* Title row and details row */
     gap: 15px;
-    /* Add spacing between rows and columns */
     padding: 20px;
     width: 100%;
-    max-width: 450px;
-    /* Control card width */
-
     border: 1px solid #ddd;
     border-radius: 10px;
-    /* Rounded corners */
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow */
-    font-family: Arial, sans-serif;
   }
 
   .air-quality h3 {
-    grid-column: 1 / 2;
-    /* Title spans the first column */
+    grid-column: 1/2;
     margin: 0;
     font-size: 1.2rem;
     color: #333;
@@ -368,12 +372,9 @@
   }
 
   #aqi-status {
-    grid-column: 2 / 3;
-    /* Status badge in the second column */
-    grid-row: 1 / 2;
-    /* Align with the title */
+    grid-column: 2/3;
+    grid-row: 1/2;
     background-color: #28a745;
-    /* Green for "Good" */
     color: #fff;
     padding: 5px 15px;
     border-radius: 15px;
@@ -387,36 +388,11 @@
   }
 
   #aqi-details {
-    grid-column: 1 / 3;
+    grid-column: 1/3;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 25px;
     padding-top: 5px;
-  }
-
-  #weather-icon {
-    grid-column: 1/2;
-    margin-right: 30px;
-  }
-
-  #particulate-matter {
-    grid-column: 2 / 3;
-    /* First column */
-  }
-
-  #sulfur-dioxide {
-    grid-column: 3 / 4;
-    /* Second column */
-  }
-
-  #nitrogen-dioxide {
-    grid-column: 4 / 5;
-    /* Third column */
-  }
-
-  #ozone {
-    grid-column: 5 / 6;
-    /* Fourth column */
   }
 
   #aqi-details div {
@@ -436,24 +412,23 @@
     margin-top: 5px;
   }
 
-  /* Highlights */
+  /* Highlights Section */
   .highlights {
     margin: 0;
-    grid-row: 2 / 3;
+    grid-row: 2/3;
     grid-column: 2/3;
-    border: 1px solid #ddd; /* Add a subtle border */
-    border-radius: 10px; /* Rounded corners for a modern look */
-    padding: 15px; /* Internal spacing */
-    font-size: 0.9rem; /* Slightly smaller font size */
-    color: #333; /* Dark text color */
-    background-color: #fff; /* Light background color */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-    display: flex; /* Align content neatly */
-    flex-direction: column; /* Stack heading and paragraph vertically */
-    justify-content: center; /* Center content vertically */
-    align-items: flex-start; /* Left-align text */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 0.9rem;
+    color: #333;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
   }
-  
 
   .highlights h3 {
     font-size: 1.2rem;
@@ -462,69 +437,64 @@
     width: 50%;
   }
 
+  /* Forecast Details */
   .forecast-details {
-    grid-column: 1 / 3; /* Span both columns */
-    grid-row: 3 / 4; /* Third row of the layout */
-    display: grid; /* Make this a grid container */
-    grid-template-columns: repeat(4, 1fr); /* Four equal-width columns */
-    gap: 20px; /* Space between grid items */
+    grid-column: 1/3;
+    grid-row: 3/4;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
   }
 
   .forecast-details div {
-    text-align: center; /* Center-align content inside the card */
-    font-size: 0.9rem; /* Standard font size */
-    color: #555; /* Subtle text color */
-    border: 1px solid #ddd; /* Light border for the card */
-    border-radius: 10px; /* Rounded corners for modern look */
-    padding: 15px; /* Padding inside each card */
-    background-color: #fff; /* White background for the card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    display: flex; /* Flexbox for aligning content */
-    flex-direction: column; /* Stack content vertically */
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-    min-height: 150px; /* Ensure consistent height */
-    max-width: 200px; /* Ensure consistent width */
+    text-align: center;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
   }
 
   .forecast-details div img {
-    margin: 10px 0; /* Add spacing around the icon */
-    width: 25px; /* Icon size */
-    height: auto; /* Maintain aspect ratio */
+    margin: 10px 0;
+    width: 25px;
+    height: auto;
   }
 
   .forecast-details div p {
     margin: 0;
-    font-size: 1rem; /* Slightly larger font for labels */
+    font-size: 1rem;
     font-weight: bold;
-    color: #333; /* Darker color for better contrast */
+    color: #333;
   }
 
   .forecast-details div span {
-    margin-top: 5px; /* Add spacing above the value */
-    font-size: 1.2rem; /* Larger font for values */
+    margin-top: 5px;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #000; /* Strong black color for values */
+    color: #000;
   }
 
-  /* 7 Days Forecast */
+  /* Weekly Forecast Section */
   #weekly-forecast {
-    grid-column: 1 / 2;
-    /* Left column */
-    grid-row: 2 / 5;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
     width: 100%;
     height: 100%;
-    min-width: 300px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   #weekly-forecast:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02); /* Slight zoom on hover */
+    transform: scale(1.02);
   }
 
   #weekly-forecast h2 {
@@ -536,60 +506,44 @@
 
   .forecast-grid {
     display: flex;
-    flex-direction: column; /* Stack rows vertically */
-    gap: 15px; /* Space between rows */
+    flex-direction: column;
+    gap: 15px;
     margin-top: 20px;
   }
 
-  /* Individual Day Row */
   .forecast-row {
     display: flex;
-    justify-content: space-between; /* Space out day, date, and icon */
-    align-items: center; /* Center items vertically */
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
-    border: 1px solid #ddd; /* Light border for separation */
-    border-radius: 5px; /* Rounded edges for rows */
-    background-color: #fff; /* Light background for rows */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
   }
 
-  /* Day Name */
   .forecast-row .day-name {
     text-align: left;
     font-size: 1rem;
     font-weight: bold;
     color: #333;
-    flex: 1; /* Allow equal space */
+    flex: 1;
   }
 
-  /* Date */
   .forecast-row .date {
     font-size: 0.9rem;
     color: #555;
-    flex: 1; /* Allow equal space */
+    flex: 1;
     text-align: center;
   }
 
-  /* Weather Icon */
   .forecast-row .weather-icon {
-    flex: 1; /* Allow equal space */
+    flex: 1;
     text-align: right;
   }
 
   .forecast-row .weather-icon img {
-    width: 30px; /* Increase the width */
-    height: 30px; /* Ensure a consistent aspect ratio */
-  }
-
-  .forecast-day {
-    background-color: #007b9e;
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    text-align: center;
-  }
-
-  .forecast-day p {
-    font-size: 0.8rem;
+    width: 30px;
+    height: 30px;
   }
 
   .forecast-row.today .day-name {
@@ -597,33 +551,21 @@
     font-weight: bold;
   }
 
-  /* Hourly Weather */
+  /* Hourly Weather Section */
   #hourly-weather {
-    grid-column: 2 / 3; /* Center column */
-    grid-row: 3 / 5; /* Spans across two rows */
     background-color: #fff;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px;
     padding: 20px;
-    width: 100%; /* Full width in its column */
-    min-width: 400px;
-    height: auto; /* Adjust height based on content */
+    width: 100%;
+    height: auto;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   #hourly-weather:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02); /* Slight zoom on hover */
-  }
-
-  .hourly-time img {
-    margin: 10px 0; /* Add spacing above and below icon */
-    width: 50px; /* Icon size */
-    height: auto; /* Maintain aspect ratio */
-  }
-
-  #hourly-wind-grid img{
-    width: 30px;
+    transform: scale(1.02);
   }
 
   #hourly-weather h3 {
@@ -633,67 +575,67 @@
     text-align: left;
   }
 
-  /* Grid for Hourly Data */
   .hourly-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Four equally sized columns */
-    gap: 10px; /* Spacing between items */
-    justify-items: center; /* Center align items in grid */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    justify-items: center;
     margin-top: 10px;
   }
 
   .hourly-time {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    border: 1px solid #ddd; /* Light border around each block */
-    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #ddd;
+    border-radius: 10px;
     padding: 10px;
-    background-color: #fff; /* Light background color */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    width: 100%; /* Responsive block width */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+
+  .hourly-time img {
+    margin: 10px 0;
+    width: 50px;
+    height: auto;
+  }
+
+  #hourly-wind-grid img {
+    width: 30px;
   }
 
   .hourly-time p {
     margin: 0;
-    font-size: 1rem; /* Slightly larger font for labels */
+    font-size: 1rem;
     font-weight: bold;
     color: #333;
   }
 
   .hourly-time span {
-    font-size: 0.9rem;
-    color: #555;
-  }
-
-  .hourly-time span {
-    margin-top: 5px; /* Space above temperature/wind */
-    font-size: 1.2rem; /* Larger font for values */
+    margin-top: 5px;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #007b9e; /* Highlight temperature/wind */
+    color: #007b9e;
   }
 
   /* Did You Know Section */
   #did-you-know {
-    grid-column: 3 / 4;
-    /* Right column */
-    grid-row: 3 / 5;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
     width: 100%;
     height: 100%;
-    min-width: 350px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   #did-you-know:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02); /* Slight zoom on hover */
+    transform: scale(1.02);
   }
-
 
   #did-you-know h2 {
     font-size: 1.5rem;
@@ -705,6 +647,364 @@
     font-size: 1rem;
     color: #555;
   }
+
+
+
+  #footer{
+    display: grid;
+    grid-column: 1/-1;
+    gap: 2rem;
+  }
+  footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #aaa;
+    font-size: 0.9rem;
+    padding: 20px 0;
+    background-color: #E6F2FF;
+  }
+
+  footer nav {
+    margin-top: 10px;
+  }
+
+  footer nav a {
+    color: #007b9e;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+    transition: text-decoration 0.2s ease;
+  }
+
+  footer nav a:hover {
+    text-decoration: underline;
+  }
+
+
+
+
+  /* Responsive Layouts */
+  @media (min-width: 1300px) {
+    main {
+      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-rows: repeat(4, auto);
+    }
+
+    #current-weather {
+      grid-column: 1/2;
+      grid-row: 1/2;
+    }
+
+    #todays-forecast {
+      grid-column: 2/4;
+      grid-row: 1/3;
+    }
+
+    #weekly-forecast {
+      grid-column: 1/2;
+      grid-row: 2/5;
+    }
+
+    #hourly-weather {
+      grid-column: 2/3;
+      grid-row: 3/5;
+    }
+
+    #did-you-know {
+      grid-column: 3/4;
+      grid-row: 3/5;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    main {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    #current-weather,
+    #todays-forecast,
+    #weekly-forecast,
+    #hourly-weather,
+    #did-you-know {
+      grid-column: 1/-1;
+      width: 100%;
+      min-width: unset;
+    }
+
+    #todays-forecast {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .forecast-details {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    main {
+      padding: 10px;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.85rem;
+    }
+
+    .temperature {
+      font-size: 1.6rem;
+      gap: 20px;
+    }
+
+    #current-icon {
+      width: 60px;
+    }
+
+    .forecast-details div {
+      min-height: 100px;
+      padding: 10px;
+    }
+
+    .hourly-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    #aqi-details {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+
+    /* Continuing from previous media query */
+    #current-condition {
+      font-size: 0.9rem;
+    }
+
+    .forecast-details {
+      gap: 8px;
+    }
+
+    .forecast-details div {
+      min-height: 90px;
+      padding: 8px;
+    }
+
+    .forecast-details div img {
+      width: 18px;
+      margin: 5px 0;
+    }
+
+    .forecast-details div span {
+      font-size: 0.85rem;
+    }
+
+    /* Weekly forecast adjustments */
+    .forecast-row {
+      padding: 8px;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .forecast-row .day-name {
+      font-size: 0.9rem;
+    }
+
+    .forecast-row .date {
+      font-size: 0.8rem;
+    }
+
+    .forecast-row .weather-icon img {
+      width: 25px;
+      height: 25px;
+    }
+
+    /* Air quality adjustments */
+    .air-quality {
+      padding: 12px;
+    }
+
+    #aqi-status {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+    }
+
+    #aqi-details {
+      gap: 10px;
+      grid-template-columns: 1fr;
+    }
+
+    #aqi-details div p {
+      font-size: 0.75rem;
+    }
+
+    #aqi-details div span {
+      font-size: 0.85rem;
+    }
+
+    /* Hourly weather adjustments */
+    .hourly-grid {
+      gap: 8px;
+    }
+
+    .hourly-time {
+      padding: 8px;
+    }
+
+    .hourly-time img {
+      width: 35px;
+      margin: 5px 0;
+    }
+
+    .hourly-time span {
+      font-size: 0.85rem;
+    }
+
+    /* Did you know section adjustments */
+    #did-you-know p {
+      font-size: 0.85rem;
+    }
+
+    /* General padding adjustments */
+    #current-weather,
+    #todays-forecast,
+    #weekly-forecast,
+    #hourly-weather,
+    #did-you-know {
+      padding: 12px;
+    }
+  }
+
+  /* Even smaller screens */
+  @media (max-width: 360px) {
+    main {
+      padding: 8px;
+    }
+
+    .temperature {
+      font-size: 1.2rem;
+      gap: 10px;
+    }
+
+    #current-icon {
+      width: 45px;
+    }
+
+    .forecast-details div {
+      min-height: 80px;
+      padding: 6px;
+    }
+
+    .hourly-time img {
+      width: 30px;
+    }
+
+    /* Reduce all paddings */
+    #current-weather,
+    #todays-forecast,
+    #weekly-forecast,
+    #hourly-weather,
+    #did-you-know {
+      padding: 10px;
+    }
+
+    /* Further reduce font sizes */
+    h2 {
+      font-size: 1.1rem;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+    }
+
+    p,
+    span {
+      font-size: 0.8rem;
+    }
+
+    /* Adjust spacing in forecast rows */
+    .forecast-row {
+      gap: 4px;
+    }
+
+    .forecast-row>* {
+      margin: 2px 0;
+    }
+
+    /* Minimize hourly forecast spacing */
+    .hourly-grid {
+      gap: 6px;
+    }
+
+    .hourly-time {
+      padding: 6px;
+    }
+  }
+
+  /* Utility Classes */
+  .text-center {
+    text-align: center;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .h-full {
+    height: 100%;
+  }
+
+  .flex {
+    display: flex;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .gap-2 {
+    gap: 0.5rem;
+  }
+
+  .gap-4 {
+    gap: 1rem;
+  }
+
+  .p-4 {
+    padding: 1rem;
+  }
+
+  .m-4 {
+    margin: 1rem;
+  }
+
+  .rounded {
+    border-radius: 0.25rem;
+  }
+
+  .shadow {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  
 </style>
 
 
