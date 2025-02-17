@@ -264,6 +264,6 @@ router.get("/", async (req, res) => {
       error: error.message || "Weather data unavailable. Try again later.",
     });
   }
-});
+}); 
 
 module.exports = router;
