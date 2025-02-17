@@ -3064,5 +3064,35 @@
     "lat": 40.6403167,
     "lon": 22.9352716,
     "timestamp": "2025-02-17T17:18:14.848Z"
+  },
+  {
+    "city": "Thessaloniki, Macedonia and Thrace, GR",
+    "lat": 40.6403167,
+    "lon": 22.9352716,
+    "timestamp": "2025-02-17T17:37:19.202Z"
+  },
+  {
+    "city": "Sykies Municipal Unit, Macedonia and Thrace, GR",
+    "lat": 40.6454272,
+    "lon": 22.9441536,
+    "timestamp": "2025-02-17T17:37:22.330Z"
+  },
+  {
+    "city": "Milan, Lombardy, IT",
+    "lat": 45.4641943,
+    "lon": 9.1896346,
+    "timestamp": "2025-02-17T17:37:30.331Z"
+  },
+  {
+    "city": "Milan, Lombardy, IT",
+    "lat": 45.4641943,
+    "lon": 9.1896346,
+    "timestamp": "2025-02-17T17:37:37.741Z"
+  },
+  {
+    "city": "Milan, Lombardy, IT",
+    "lat": 45.4641943,
+    "lon": 9.1896346,
+    "timestamp": "2025-02-17T17:37:40.902Z"
   }
 ]
