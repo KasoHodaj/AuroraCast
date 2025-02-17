@@ -12,8 +12,7 @@ A dynamic, **open-source** weather application providing real-time weather data,
 5. [APIs Used](#apis-used)  
 6. [Installation and Setup](#installation-and-setup)  
 7. [Contributing](#contributing)  
-8. [License](#license)  
-9. [Contact](#contact)
+8. [Notes](#Notes)  
 
 ---
 
@@ -29,8 +28,6 @@ A dynamic, **open-source** weather application providing real-time weather data,
 ---
 
 ## Screenshots
-
-> **Note**: Update the paths below to match where you store your screenshots in the repository.
 
 <details>
   <summary>Homepage & Forecast</summary>
@@ -120,9 +117,9 @@ A dynamic, **open-source** weather application providing real-time weather data,
 ## Contributing
 This will be an open-source project, and contributions are welcome. You can:
 
-Submit bug reports or feature requests via Issues
-Open pull requests for improvements
-Share ideas to enhance the project
+1. **Submit bug reports or feature requests via Issues**
+2. **Open pull requests for improvements**
+3. **Share ideas to enhance the project**
 
 
 ## Notes
